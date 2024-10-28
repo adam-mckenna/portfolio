@@ -67,15 +67,23 @@ const { title } = Astro.props;
     }
 
     strong {
-      font-weight: 500;
+      @apply font-semibold;
     }
 
     a {
-      @apply text-secondary underline;
+      @apply font-semibold text-secondary underline;
     }
 
     p {
-      @apply text-primary-dark opacity-70;
+      @apply tracking-tighter text-primary-dark-opaque;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      @apply tracking-tight text-primary-dark;
     }
   }
 </style>

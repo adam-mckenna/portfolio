@@ -12,6 +12,6 @@ Outside of work, I’m a **[keen runner](https://www.instagram.com/adamcantrun)*
 
 ## This website.
 
-This website is a basic portfolio to showcase my experience and a few projects I've worked on. It's built with **[Astro](https://astro.build/)**, **[React](https://react.dev/)** and [**Tailwind**](https://tailwindcss.com/), and deployed with **[Vercel](https://vercel.com/)**.
+This website is a basic portfolio to showcase my experience and a few projects I've worked on. It's designed with Figma. It's built with **[Astro](https://astro.build/)**, **[React](https://react.dev/)** and [**Tailwind**](https://tailwindcss.com/), and deployed with **[Vercel](https://vercel.com/)**.
 
 I'm drawn inspiration heavily from other great developers and designers for the user interface. I like it. I hope you do too.
