@@ -6,6 +6,13 @@ export default {
       'sans': ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {},
+    colors: {
+      'background': "#FAF4EE",
+'secondary': "#C1666B",
+'primary-dark': "#02182B",
+'primary': "#4F7CAC",
+'black': "#020100"
+    }
   },
-  plugins: [],
+  plugins: [], 
 };
