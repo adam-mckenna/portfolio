@@ -13,6 +13,7 @@ export default {
       "primary-dark-opaque": "#02182bbf",
       primary: "#4F7CAC",
       support: "#3E6186",
+      "support-light": "#D9E3ED",
       black: "#020100",
     },
   },
