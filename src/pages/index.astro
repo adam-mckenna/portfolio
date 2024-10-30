@@ -108,14 +108,24 @@ import Layout from "../layouts/Layout.astro";
           > London, England (hybrid)
         </p>
 
-        <h3 class="font-semibold mt-2">Web Developer - Binary Vision</h3>
+        <h3 class="font-semibold mt-2">
+          Web Developer - <a
+            class="text-black no-underline inline-flex"
+            href="https://binaryvision.com/"
+            target="_blank"
+            >Binary Vision <img
+              class="inline-block ml-1 w-2"
+              src="./icons/external-link.svg"
+              alt=""
+            /></a>
+        </h3>
         <p class="mt-1 text-sm">
           Developed and maintained a data visualisation PWA for Oxford
           Instruments. Worked closely with the client, designers and the
           development team.
         </p>
         <div>
-          <!-- tags -->
+          <!-- ToDo: tags -->
         </div>
       </article>
 
@@ -127,14 +137,22 @@ import Layout from "../layouts/Layout.astro";
         </p>
 
         <h3 class="font-semibold mt-2">
-          Senior Frontend Developer - DWP Digital
+          Senior Frontend Developer - <a
+          class="text-black no-underline inline-flex"
+          href="https://dwpdigital.blog.gov.uk/"
+          target="_blank"
+          >DWP Digital <img
+            class="inline-block ml-1 w-2"
+            src="./icons/external-link.svg"
+            alt=""
+          /></a>
         </h3>
         <p class="mt-1 text-sm">
           Worked across several teams on internal tools for authentication and
           customer management. Worked with the GOV.UK Design System.
         </p>
         <div>
-          <!-- tags -->
+          <!-- ToDo: tags -->
         </div>
       </article>
       <article class="mt-6">
@@ -145,20 +163,33 @@ import Layout from "../layouts/Layout.astro";
         </p>
 
         <h3 class="font-semibold mt-2">
-          Frontend Developer - Money Advice Trust
+          Frontend Developer - <a
+          class="text-black no-underline inline-flex"
+          href="https://moneyadvicetrust.org/"
+          target="_blank"
+          >Money Advice Trust <img
+            class="inline-block ml-1 w-2"
+            src="./icons/external-link.svg"
+            alt=""
+          /></a>
         </h3>
         <p class="mt-1 text-sm">
+          <!-- ToDo: re-write this content -->
           Worked on several websites for a debt-support charity. Built three SSG
           websites with either Next.js or Gatsby, with a supporting Python
           backend.
         </p>
         <div>
-          <!-- tags -->
+          <!-- ToDo: tags -->
         </div>
       </article>
 
-      <a href="" class="block font-semibold no-underline mt-6"
-        >View complete resume</a
+      <a href="./adam-mckenna-cv.pdf" target="_blank" class="flex font-semibold no-underline mt-6"
+        >View complete resume <img
+        class="inline-block ml-2 w-4"
+        src="./icons/external-link-horizontal.svg"
+        alt=""
+      /></a
       >
     </section>
 
@@ -166,7 +197,19 @@ import Layout from "../layouts/Layout.astro";
       <h2 class="text-xl font-semibold">Portfolio</h2>
 
       <article class="mt-3">
-        <h3 class="font-semibold mt-2">Oxford Instruments Viewpoint</h3>
+        <h3 class="font-semibold mt-2">
+          <a
+          class="text-black no-underline inline-flex"
+          href="https://www.binaryvision.com/portfolio-item/oxford-instruments/"
+          target="_blank"
+          >Oxford Instruments Viewpoint <img
+            class="inline-block ml-1 w-2"
+            src="./icons/external-link.svg"
+            alt=""
+          /></a>
+          
+        
+        </h3>
         <p class="mt-1 text-sm">
           Viewpoint is a <strong>data visualisation platform</strong> to gain insights
           into how <strong>Oxford Instruments</strong> microscope detectors are being
@@ -175,11 +218,22 @@ import Layout from "../layouts/Layout.astro";
         <div>
           <!-- tags -->
         </div>
-        <img class="mt-2" style="width: 400px; height: 175px;" />
+        <img class="mt-2 rounded" src="./viewpoint.png" style="width: 400px; height: 175px;" />
       </article>
 
       <article class="mt-6">
-        <h3 class="font-semibold mt-2">Siemens Analytics Unlocked</h3>
+        <h3 class="font-semibold mt-2">
+
+          <a
+          class="text-black no-underline inline-flex"
+          href="https://www.merkle.com/dach/en/references/siemens-analytics-unlocked"
+          target="_blank"
+          >Siemens Analytics Unlocked <img
+            class="inline-block ml-1 w-2"
+            src="./icons/external-link.svg"
+            alt=""
+          /></a>
+          </h3>
         <p class="mt-1 text-sm">
           Analytics Unlocked is an <strong
             >award-winning data visualisation</strong
@@ -190,7 +244,7 @@ import Layout from "../layouts/Layout.astro";
         <div>
           <!-- tags -->
         </div>
-        <img class="mt-2" style="width: 400px; height: 175px;" />
+        <img class="mt-2 rounded" src="./analytics-unlocked.png" style="width: 400px; height: 175px;" />
       </article>
     </section>
 
@@ -219,7 +273,19 @@ import Layout from "../layouts/Layout.astro";
           > Newcastle, England
         </p>
 
-        <h3 class="font-semibold mt-2">Chef - Gusto Italians</h3>
+        <h3 class="font-semibold mt-2">Chef - 
+          
+        
+          <a
+          class="text-black no-underline inline-flex"
+          href="https://gustorestaurants.com/"
+          target="_blank"
+          >Gusto Italians <img
+            class="inline-block ml-1 w-2"
+            src="./icons/external-link.svg"
+            alt=""
+          /></a>
+        </h3>
         <p class="mt-1 text-sm">
           <strong>3-month sabbatical</strong> from work to explore my passion for
           cooking. Responsible for <strong
@@ -234,18 +300,20 @@ import Layout from "../layouts/Layout.astro";
 
     <footer>
       <section class="mt-16 text-center">
-        <h2 class="text-xl font-semibold">Nice to meet you!</h2>
-        <p class="mt-1">Thanks for stopping by.</p>
+        <h2 class="text-xl font-medium">Nice to meet you 👋</h2>
+        <p class="mt-0.5 text-primary-dark-opaque opacity-50 font-extralight">
+          Thanks for stopping by.
+        </p>
 
         <img
           src="/headshot.jpg"
-          class="mt-3"
+          class="mt-4"
           style="margin-left: auto; margin-right: auto;width: 160px; height: 160px; border-radius: 100px; background: grey"
         />
       </section>
 
       <section class="mt-16">
-        <p class="text-sm">
+        <p class="text-sm font-extralight text-primary-dark-opaque">
           Designed and developed by myself. Designed with <a
             href="https://www.figma.com/">Figma</a
           >. Developed with <a href="https://astro.build/">Astro</a>, <a
