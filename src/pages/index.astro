@@ -1,4 +1,5 @@
 ---
+import Nav from "../components/Nav";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -22,35 +23,7 @@ import Layout from "../layouts/Layout.astro";
       >
     </p>
 
-    <nav class="max-lg:hidden lg:mt-12">
-      <ul>
-        <!-- todo: animate underline, somehow -->
-        <li>
-          <a
-            class="block text-xl font-bold uppercase hover:opacity-100 focus:opacity-100"
-            href="#top">About</a
-          >
-        </li>
-        <li>
-          <a
-            class="block text-xl mt-4 font-bold uppercase opacity-50 hover:opacity-100 focus:opacity-100"
-            href="#experience">Experience</a
-          >
-        </li>
-        <li>
-          <a
-            class="block text-xl mt-4 font-bold uppercase opacity-50 hover:opacity-100 focus:opacity-100"
-            href="#portfolio">Portfolio</a
-          >
-        </li>
-        <li>
-          <a
-            class="block text-xl mt-4 font-bold uppercase opacity-50 hover:opacity-100 focus:opacity-100"
-            href="#career-breaks">Career Breaks</a
-          >
-        </li>
-      </ul>
-    </nav>
+    <Nav client:load />
 
     <ul class="mt-4 flex gap-2 lg:absolute lg:bottom-40">
       <li>
@@ -92,8 +65,8 @@ import Layout from "../layouts/Layout.astro";
   </header>
 
   <section class="lg:col-span-6 lg:col-start-7">
-    <section class="mt-12 sm:mt-16 lg:mt-0">
-      <h2 class="font-semibold lg:sr-only" id="about">About</h2>
+    <section class="mt-12 sm:mt-16 lg:mt-0" id="about">
+      <h2 class="font-semibold lg:sr-only">About</h2>
 
       <p class="mt-2 text-base sm:text-lg lg:mt-0 lg:text-xl/8">
         Like many developers, my coding life <strong
