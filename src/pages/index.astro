@@ -5,23 +5,23 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="Adam McKenna Portfolio">
   <header>
     <h1 class="text-3xl font-semibold">Adam McKenna</h1>
-    <h2 class="text-xl font-semibold mt-2">Web Developer</h2>
-    <p class="mt-2">
-      I’m a full-stack developer with a passion for <strong
+    <h2 class="font-semibold mt-2 text-xl">Web Developer</h2>
+    <p class="mt-2 text-base">
+      I'm a remote full-stack developer with a passion for <strong
         >user experience</strong
       >, <strong>accessibility</strong> and <strong>service design</strong>.
     </p>
 
-    <nav class="max-md:hidden mt-8">
+    <nav class="max-md:hidden">
       <ul>
-        <li><a class="block" href="">About</a></li>
-        <li><a class="block mt-2" href="">Experience</a></li>
-        <li><a class="block mt-2" href="">Portfolio</a></li>
-        <li><a class="block mt-2" href="">Career Breaks</a></li>
+        <li><a class="block" href="#about">About</a></li>
+        <li><a class="block mt-2" href="#experience">Experience</a></li>
+        <li><a class="block mt-2" href="#portfolio">Portfolio</a></li>
+        <li><a class="block mt-2" href="#career-breaks">Career Breaks</a></li>
       </ul>
     </nav>
 
-    <ul class="mt-8 flex gap-2 opacity-75">
+    <ul class="mt-4 flex gap-2 opacity-75">
       <li>
         <a href="https://github.com/adam-mckenna" target="_blank"
           ><img class="w-7" src="./icons/github.svg" /></a
@@ -51,15 +51,15 @@ import Layout from "../layouts/Layout.astro";
   </header>
 
   <section>
-    <section class="mt-16">
-      <h2 class="text-xl font-semibold">About</h2>
+    <section class="mt-12">
+      <h2 class="font-semibold" id="about">About</h2>
 
-      <p class="mt-2">
-        Like many developers, my life coding <strong
-          >started about 10 years ago</strong
+      <p class="mt-2 text-base">
+        Like many developers, my coding life <strong
+          >began about 10 years ago</strong
         > building basic PHP websites with WordPress. Then I discovered how <strong
           >great JavaScript is</strong
-        >. I’ve been lucky enough to write JavaScript for a <strong
+        >. Since then, I've been lucky enough to write JavaScript for a <strong
           ><a href="https://www.merkle.com/dach/en">large Germany agency</a
           ></strong
         >, a <strong
@@ -73,23 +73,24 @@ import Layout from "../layouts/Layout.astro";
         >.
       </p>
 
-      <p class="mt-3">
-        These days, after a sabbatical to travel the world, I’m working mostly
-        with frontend stuff with a real focus on creating <strong
+      <p class="mt-3 text-base">
+        These days, after a <a href="#career-breaks"
+          >sabbatical to travel the world</a
+        >, I'm working mostly with frontend stuff with a real focus on creating <strong
           >highly usable and accessible applications</strong
         > with a focus on <strong>slick service design</strong>. <strong
           ><a href="https://react.dev/">React</a></strong
-        > is my forte, but I’m also working with other technologies too. I also work
-        on backend stuff as needed.
+        > is my forte. But I work with other technologies, including backend stuff,
+        as needed.
       </p>
 
-      <p class="mt-3">
-        Outside of work, I’m a <strong
+      <p class="mt-3 text-base">
+        Outside of work, I'm a <strong
           ><a href="https://www.instagram.com/adamcantrun">keen runner</a
           ></strong
         >, the <strong>household chef</strong> and a bit of a <strong
           >coffee snob</strong
-        >. I’ve always got a <strong
+        >. I've always got a <strong
           ><a href="https://www.goodreads.com/user/show/62146817-adam-mckenna"
             >few books on the go</a
           ></strong
@@ -97,19 +98,21 @@ import Layout from "../layouts/Layout.astro";
       </p>
     </section>
 
-    <section class="mt-16">
-      <h2 class="text-xl font-semibold">Experience</h2>
+    <section class="mt-12">
+      <h2 class="font-semibold" id="experience">Experience</h2>
 
       <!-- ToDo: implement timeline at the side -->
-      <article class="mt-2">
-        <p class="text-xs opacity-50">
-          AUG 2022 — MAR 2023 <span class="mx-0.5 text-support opacity-50"
+      <article class="mt-4">
+        <p class="text-xs opacity-75 flex">
+          AUG 2022 — MAR 2023 <span class="mx-1 text-[7px] opacity-75"
             >&#x2022;</span
-          > London, England (hybrid)
+          > London, England
         </p>
 
-        <h3 class="font-semibold mt-2">
-          Web Developer - <a
+        <h3 class="font-semibold mt-1 flex flex-wrap">
+          Web Developer <span class="mx-2 text-[11px] opacity-75">&#x2022;</span
+          >
+          <a
             class="text-black no-underline inline-flex"
             href="https://binaryvision.com/"
             target="_blank"
@@ -120,11 +123,11 @@ import Layout from "../layouts/Layout.astro";
             /></a
           >
         </h3>
-        <p class="mt-1 text-sm">
+        <p class="mt-1 text-sm/6">
           Developed and maintained a <strong>data visualisation PWA</strong> for
           <a href="https://www.oxinst.com/" target="_blank">
-            Oxford Instruments
-          </a>. Worked closely with the <strong>client</strong>, <strong
+            Oxford Instruments</a
+          >. Worked closely with the <strong>client</strong>, <strong
             >designers</strong
           > and the
           <strong>development team</strong>.
@@ -159,15 +162,18 @@ import Layout from "../layouts/Layout.astro";
         </div>
       </article>
 
-      <article class="mt-6">
-        <p class="text-xs opacity-50">
-          APR 2021 — APR 2022 <span class="mx-0.5 text-support opacity-50"
+      <article class="mt-8">
+        <p class="text-xs opacity-75 flex">
+          APR 2021 — APR 2022 <span class="mx-1 text-[7px] opacity-75"
             >&#x2022;</span
-          > Sheffield, England (remote)
+          > Sheffield, England
         </p>
 
-        <h3 class="font-semibold mt-2">
-          Senior Frontend Developer - <a
+        <h3 class="font-semibold mt-1 flex flex-wrap">
+          Senior Frontend Developer <span class="mx-2 text-[11px] opacity-75"
+            >&#x2022;</span
+          >
+          <a
             class="text-black no-underline inline-flex"
             href="https://dwpdigital.blog.gov.uk/"
             target="_blank"
@@ -178,7 +184,7 @@ import Layout from "../layouts/Layout.astro";
             /></a
           >
         </h3>
-        <p class="mt-1 text-sm">
+        <p class="mt-1 text-sm/6">
           Worked across several teams on <strong>internal tools</strong> for authentication
           and customer management. Worked with the <a
             href="https://design-system.service.gov.uk/"
@@ -213,15 +219,18 @@ import Layout from "../layouts/Layout.astro";
           </div>
         </div>
       </article>
-      <article class="mt-6">
-        <p class="text-xs opacity-50">
-          JAN 2020 — APR 2021 <span class="mx-0.5 text-support opacity-50"
+      <article class="mt-8">
+        <p class="text-xs opacity-75 flex">
+          JAN 2020 — APR 2021 <span class="mx-1 text-[7px] opacity-75"
             >&#x2022;</span
           > Birmingham, England
         </p>
 
-        <h3 class="font-semibold mt-2">
-          Frontend Developer - <a
+        <h3 class="font-semibold mt-1 flex flex-wrap">
+          Frontend Developer <span class="mx-2 text-[11px] opacity-75"
+            >&#x2022;</span
+          >
+          <a
             class="text-black no-underline inline-flex"
             href="https://moneyadvicetrust.org/"
             target="_blank"
@@ -232,8 +241,7 @@ import Layout from "../layouts/Layout.astro";
             /></a
           >
         </h3>
-        <p class="mt-1 text-sm">
-          <!-- ToDo: re-write this content -->
+        <p class="mt-1 text-sm/6">
           De-facto frontend lead for a series of <a
             href="https://www.cloudflare.com/en-gb/learning/performance/static-site-generator/"
             >static-site generated</a
@@ -289,11 +297,11 @@ import Layout from "../layouts/Layout.astro";
       >
     </section>
 
-    <section class="mt-16">
-      <h2 class="text-xl font-semibold">Portfolio</h2>
+    <section class="mt-12">
+      <h2 class="font-semibold" id="portfolio">Portfolio</h2>
 
-      <article class="mt-3">
-        <h3 class="font-semibold mt-2">
+      <article class="mt-2">
+        <h3 class="font-semibold flex flex-wrap">
           <a
             class="text-black no-underline inline-flex"
             href="https://www.binaryvision.com/portfolio-item/oxford-instruments/"
@@ -305,12 +313,13 @@ import Layout from "../layouts/Layout.astro";
             /></a
           >
         </h3>
-        <p class="mt-1 text-sm">
+
+        <p class="mt-1 text-sm/6">
           Viewpoint is a <strong>data visualisation platform</strong> to gain insights
           into how <strong>Oxford Instruments</strong> microscope detectors are being
           used by their customers.
         </p>
-        <div class="flex flex-wrap mt-3 gap-1.5 opacity-75">
+        <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
           <div
             class="rounded bg-support text-support-light py-0.5 px-2 text-xs transition-all"
           >
@@ -337,15 +346,17 @@ import Layout from "../layouts/Layout.astro";
             PWA
           </div>
         </div>
+
+        <!-- todo: change photo -->
         <img
+          alt="Oxford Instruments Viewpoint UI sample"
           class="mt-4 rounded"
           src="./viewpoint.png"
-          style="width: 400px; height: 175px;"
         />
       </article>
 
       <article class="mt-6">
-        <h3 class="font-semibold mt-2">
+        <h3 class="font-semibold flex flex-wrap">
           <a
             class="text-black no-underline inline-flex"
             href="https://www.merkle.com/dach/en/references/siemens-analytics-unlocked"
@@ -357,10 +368,10 @@ import Layout from "../layouts/Layout.astro";
             /></a
           >
         </h3>
-        <p class="mt-1 text-sm">
+        <p class="mt-1 text-sm/6">
           Analytics Unlocked is an <strong
             >award-winning data visualisation</strong
-          > project to simplify complex marketing data from <strong
+          > platform to simplify complex marketing data from <strong
             >Siemens</strong
           > across the globe.
         </p>
@@ -386,21 +397,22 @@ import Layout from "../layouts/Layout.astro";
             Material UI
           </div>
         </div>
+
+        <!-- todo: change photo -->
         <img
+          alt="Siemens Analytics Unlocked UI sample"
           class="mt-4 rounded"
           src="./analytics-unlocked.png"
-          style="width: 400px; height: 175px;"
         />
       </article>
     </section>
 
-    <section class="mt-16">
-      <h2 class="text-xl font-semibold">Career Breaks</h2>
+    <section class="mt-12">
+      <h2 class="font-semibold" id="career-breaks">Career Breaks</h2>
 
       <article class="mt-3">
-        <p class="text-xs opacity-50">MAR 2023 — OCT 2024</p>
-
-        <h3 class="font-semibold mt-2">
+        <p class="text-xs opacity-75 flex">MAR 2023 — OCT 2024</p>
+        <h3 class="font-semibold mt-1 flex flex-wrap">
           <a
             class="text-black no-underline inline-flex"
             href="https://www.polarsteps.com/AdamMcKennaUK/6541737-the-long-summer"
@@ -415,7 +427,7 @@ import Layout from "../layouts/Layout.astro";
 
         <!-- ToDo: implement country flags -->
 
-        <p class="mt-1 text-sm">
+        <p class="mt-1 text-sm/6">
           <strong>20-month sabbatical</strong> to work, volunteer and travel across
           <strong>14 countries</strong> and <strong>3 continents</strong>.
           Cheffed for 6 months and volunteered across 8 projects.
@@ -423,14 +435,14 @@ import Layout from "../layouts/Layout.astro";
       </article>
 
       <article class="mt-6">
-        <p class="text-xs opacity-50">
-          APR 2022 — JUL 2022 <span class="mx-0.5 text-support opacity-50"
+        <p class="text-xs opacity-75 flex">
+          APR 2022 — JUL 2022 <span class="mx-1 text-[7px] opacity-75"
             >&#x2022;</span
           > Newcastle, England
         </p>
 
-        <h3 class="font-semibold mt-2">
-          Chef -
+        <h3 class="font-semibold mt-1 flex flex-wrap">
+          Chef <span class="mx-2 text-[11px] opacity-75">&#x2022;</span>
           <a
             class="text-black no-underline inline-flex"
             href="https://gustorestaurants.com/"
@@ -442,11 +454,11 @@ import Layout from "../layouts/Layout.astro";
             /></a
           >
         </h3>
-        <p class="mt-1 text-sm">
+
+        <p class="mt-1 text-sm/6">
           <strong>3-month sabbatical</strong> from work to explore my passion for
-          cooking. Responsible for <strong
-            >preparing, cooking and plating starters, salads and desserts</strong
-          >. We did as many as <strong>300 covers a day</strong>.
+          cooking. Responsible for preparing, cooking and plating starters, salads
+          and desserts. We did as many as <strong>300 covers a day</strong>.
         </p>
         <div>
           <!-- todo: tags -->
@@ -455,9 +467,9 @@ import Layout from "../layouts/Layout.astro";
     </section>
 
     <footer>
-      <section class="mt-16 text-center">
-        <h2 class="text-xl font-medium">Nice to meet you 👋</h2>
-        <p class="mt-0.5 text-primary-dark-opaque opacity-50 font-extralight">
+      <section class="mt-12 text-center">
+        <p class="font-medium text-black text-xl">Nice to meet you 👋</p>
+        <p class="mt-0.5 text-primary-dark-opaque opacity-75 font-extralight">
           Thanks for stopping by.
         </p>
 
@@ -468,8 +480,8 @@ import Layout from "../layouts/Layout.astro";
         />
       </section>
 
-      <section class="mt-16">
-        <p class="text-sm font-extralight text-primary-dark-opaque">
+      <section class="mt-12">
+        <p class="text-sm/6 font-extralight text-primary-dark-opaque">
           Designed and developed by myself. Designed with <a
             href="https://www.figma.com/">Figma</a
           >. Developed with <a href="https://astro.build/">Astro</a>, <a
