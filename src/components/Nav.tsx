@@ -38,7 +38,6 @@ const Nav = () => {
           if (entry.isIntersecting) {
             // Add to the visible elements set
             setVisibleElements((prev) => new Set(prev).add(entry.target));
-            // console.log(`Element in view: ${entry.target.id}`);
           } else {
             // Remove from the visible elements set
             setVisibleElements((prev) => {
@@ -70,7 +69,6 @@ const Nav = () => {
       visibleElements.entries().next().value &&
       visibleElements.entries().next().value[0].id
     ) {
-      console.log(currentView);
       setCurrentView(
         visibleElements.entries().next().value[0].id === "about"
           ? "top"
