@@ -10,7 +10,7 @@ These days, after a sabbatical to travel the world, I’m working mostly with fr
 
 Outside of work, I’m a **[keen runner](https://www.instagram.com/adamcantrun)**, the **household chef** and a bit of a **coffee snob**. I’ve always got a **[few books on the go](https://www.goodreads.com/user/show/62146817-adam-mckenna)**, too.
 
-## This website.
+## [This website](https://www.adammckenna.online).
 
 This website is a basic portfolio to showcase my experience and a few projects I've worked on. It's designed with Figma. It's built with **[Astro](https://astro.build/)**, **[React](https://react.dev/)** and [**Tailwind**](https://tailwindcss.com/), and deployed with **[Vercel](https://vercel.com/)**.
 
