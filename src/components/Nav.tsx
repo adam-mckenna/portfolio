@@ -80,7 +80,7 @@ const Nav = () => {
           <li key={i}>
             <a
               className={`${i >= 1 ? "mt-4" : ""} ${currentView === link ? "" : "opacity-50"} block text-xl font-bold uppercase hover:opacity-100 focus:opacity-100`}
-              href={`#${Links[link]}`}
+              href={`#${link}`}
             >
               {Links[link]}
             </a>
