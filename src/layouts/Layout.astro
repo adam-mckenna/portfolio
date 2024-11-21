@@ -48,12 +48,6 @@ const { title } = Astro.props;
 
     html {
       scroll-behavior: smooth;
-      background-color: hsla(30, 55%, 96%, 1);
-    }
-
-    body {
-      @apply font-light antialiased;
-      min-height: 100vh;
       background: rgb(18, 15, 12);
       background: radial-gradient(
         circle,
@@ -74,6 +68,11 @@ const { title } = Astro.props;
         hsla(30, 55%, 96%, 1) 100%
       );
       filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FAF4EE", endColorstr="#F6EBDF", GradientType=1 );
+    }
+
+    body {
+      @apply font-light antialiased;
+      min-height: 100vh;
     }
 
     strong {
