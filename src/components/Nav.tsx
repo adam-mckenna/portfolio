@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import hasScrolledToTop from "../helpers/hasScrolledToTop";
 
 const Links: { [key: string]: string } = {
