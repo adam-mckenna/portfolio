@@ -20,6 +20,7 @@ export default {
       support: "#3E6186",
       "support-light": "#D9E3ED",
       black: "#020100",
+      subtext: "#73808D",
     },
   },
   plugins: [],
