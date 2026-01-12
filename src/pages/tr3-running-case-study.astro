@@ -54,7 +54,7 @@ import Layout from "../layouts/Layout.astro";
 
     <p class="text-sm/6 sm:text-base/7">
       <span class="font-semibold"
-        ><a href="https://tr3.run">tr3 running</a> is a running publication</span
+        ><a href="https://tr3.run" target="_blank">tr3 running</a> is a running publication</span
       > that aims to deliver <span class="font-semibold"
         >high-quality, science-backed content</span
       > for serious runners.
@@ -67,7 +67,7 @@ import Layout from "../layouts/Layout.astro";
     alt="tr3 running homepage mockup"
   />
 
-  <section class="grid gap-2 col-span-4 col-start-5">
+  <section class="grid gap-2 col-span-6 col-start-4">
     <p class="text-sm/6 sm:text-base/7">
       <span class="font-semibold">What:</span> tr3 is a lightweight, performant JAMstack
       content network using <a
@@ -132,13 +132,17 @@ import Layout from "../layouts/Layout.astro";
     >
       Design and UX
     </h2>
+
     <p class="text-sm/6 sm:text-base/7">
-      <span class="font-semibold">:</span> minimal, premium design that inspires
-      confidence. Designed mobile first with accessibility and UX as a priority.
+      <span class="font-semibold">Objective:</span> minimal, premium design that
+      inspires confidence. Designed mobile first with accessibility and UX as a priority.
     </p>
 
     <img src="./tr3-figma.jpg" alt="tr3 running Figma design" />
-    <p class="text-philippine-grey text-xs font-light mt-[1px]">Figma mockup</p>
+
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Figma mockup.
+    </p>
 
     <h2
       class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
@@ -201,8 +205,9 @@ import Layout from "../layouts/Layout.astro";
     </ul>
 
     <img src="./tr3-mockup-article.jpg" alt="tr3 running article mockup" />
+
     <p class="text-philippine-grey text-xs font-light -mt-2 mt-[1px]">
-      tr3 running article mockup
+      tr3 running article mockup.
     </p>
 
     <h2
@@ -212,15 +217,16 @@ import Layout from "../layouts/Layout.astro";
     </h2>
     <ul class="list-disc ml-4">
       <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Contentful integration</span>: the docs
-        aren't great. Had to do a trial-and-error to figure some things out.
-        Also doesn't play well with TypeScript.
+        <span class="font-semibold">Contentful integration</span>: the
+        Contentful docs aren't great. I had to do a trial-and-error to figure
+        some things out. Contentful also doesn't play well with TypeScript.
       </li>
       <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Performance</span>: initially misunderstood
-        that JAMStack is not enough to guarantee performance. Solutions included
-        implementing delayed content load by partially loading on the server,
-        and loading the rest of the content on the client.
+        <span class="font-semibold">Performance</span>: I initially
+        misunderstood that JAMStack is not enough to guarantee performance.
+        Extra steps included implementing delayed content load by partially
+        loading on the server, and loading the rest of the content on the
+        client.
       </li>
     </ul>
 
