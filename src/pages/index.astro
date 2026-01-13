@@ -132,6 +132,62 @@ import Layout from "../layouts/Layout.astro";
     </section>
 
     <section class="mt-12 sm:mt-16">
+      <h2 class="font-semibold lg:text-3xl" id="experience">Skills</h2>
+
+      <article class="grid gap-2 mt-4 grid-cols-12 md:gap-3">
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/typescript.svg" class="h-auto w-14" />
+
+          <h3 class="font-semibold w-full">TypeScript</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/react.svg" class="h-auto w-14" />
+          <h3 class="font-semibold w-full">React</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/nodejs.svg" class="pt-2 h-auto w-14" />
+          <h3 class="font-semibold w-full">Node.js</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/php.svg" class="pt-2 h-auto w-14" />
+          <h3 class="font-semibold w-full">PHP</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/elixir.png" class="h-14 w-auto" />
+          <h3 class="font-semibold w-full">Elixir</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/html.svg" class="h-14 w-14" />
+          <h3 class="font-semibold w-full">HTML</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/css.svg" class="h-14 w-14" />
+          <h3 class="font-semibold w-full">CSS</h3>
+        </div>
+        <div
+          class="col-span-6 sm:col-span-4 lg:col-span-3 pt-7 pb-6 bg-secondary-dark/5 rounded justify-center items-center text-center flex flex-wrap gap-2"
+        >
+          <img src="./brands/a11y.svg" class="h-14 w-14" />
+          <h3 class="font-semibold w-full">A11y</h3>
+        </div>
+      </article>
+    </section>
+
+    <section class="mt-12 sm:mt-16">
       <h2 class="font-semibold lg:text-3xl" id="experience">Experience</h2>
 
       <article class="mt-4 sm:grid sm:grid-cols-12 sm:gap-6">
@@ -618,8 +674,9 @@ import Layout from "../layouts/Layout.astro";
               >high-quality, science-backed content</span
             > for serious runners.
           </p>
-          <button
-            class="rounded bg-secondary text-background font-medium text-sm opacity-90 text-center py-2 mt-2 group transition-all hover:opacity-100 hover:animate-pulse"
+          <a
+            href="/tr3-running-case-study"
+            class="rounded bg-secondary text-background font-medium text-sm opacity-90 text-center py-2 mt-2 group transition-all hover:opacity-100 hover:text-background hover:animate-pulse no-underline"
           >
             Case study
             <img
@@ -627,7 +684,7 @@ import Layout from "../layouts/Layout.astro";
               src="./icons/arrow-white.svg"
               alt=""
             />
-          </button>
+          </a>
         </div>
 
         <div class="mt-4 sm:mt-1 sm:col-span-4 sm:order-first">
