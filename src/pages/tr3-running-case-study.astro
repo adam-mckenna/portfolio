@@ -21,7 +21,6 @@ import Layout from "../layouts/Layout.astro";
     <h1 class="text-4xl font-semibold lg:text-5xl">tr3 running</h1>
 
     <div class="flex flex-wrap gap-3 opacity-75">
-  
       <div class="flex flex-wrap gap-1.5">
         <div
           class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
@@ -71,232 +70,208 @@ import Layout from "../layouts/Layout.astro";
           SEO
         </div>
       </div>
-      </div>
     </div>
-
-
-    <p class="text-sm/6 sm:text-base/7">
-      <span class="font-semibold"
-        ><a href="https://tr3.run" target="_blank">tr3 running</a> is a running publication</span
-      > that aims to deliver <span class="font-semibold"
-        >high-quality, science-backed content</span
-      > for serious runners.
-    </p>
   </header>
 
-  <img
-    class="col-span-8 col-start-3 my-6"
-    src="./tr3-mockup-home.jpg"
-    alt="tr3 running homepage mockup"
-  />
-
-  <section class="grid gap-2 col-span-6 col-start-4">
-    <p class="text-sm/6 sm:text-base/7">
-      <span class="font-semibold">What:</span> tr3 is a lightweight, performant JAMstack
-      content network using <a
-        href="https://www.contentful.com/"
-        target="_blank">Contentful</a
-      > as a headless CMS, an <a href="https://astro.build/" target="_blank"
-        >Astro</a
-      > and React SSG frontend, and deployed with <a
-        href="https://vercel.com/"
-        target="_blank">Vercel</a
-      > and GitHub Actions.
-    </p>
-
-    <p class="text-sm/6 sm:text-base/7">
-      <span class="font-semibold">Why:</span> to combine my passion for running with
-      hands-on experience in modern web development.
-    </p>
-
-    <p class="text-sm/6 sm:text-base/7">
-      <span class="font-semibold">Goal:</span> a sleek, clean and premium website
-      delivering trustworthy running content that can scale as needed. This can be
-      achieved through:
-    </p>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        Non-technical content management.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">Performance, even at scale.</li>
-      <li class="text-sm/6 sm:text-base/7">
-        Setup for vast content (articles, authors, categories, etc) from the
-        get-go.
-      </li>
-    </ul>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Motivation
-    </h2>
-    <p class="text-sm/6 sm:text-base/7">
-      Why build the platform from scratch instead of a pre-built solution, such
-      as WordPress? Several reasons:
-    </p>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Long-term cadence:</span> it's more upfront work,
-        but less long-term work. WordPress gets you off the ground quickly, but can
-        be painful to work with &mdash; and it's not fun.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Performance:</span> easier to create a light-weight
-        site without bloat.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Ownership and UX:</span> full control of the
-        end-to-end user experience.
-      </li>
-    </ul>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Design and UX
-    </h2>
-
-    <p class="text-sm/6 sm:text-base/7">
-      <span class="font-semibold">Objective:</span> minimal, premium design that
-      inspires confidence. Designed mobile first with accessibility and UX as a priority.
-    </p>
-
-    <img src="./tr3-figma.jpg" alt="tr3 running Figma design" />
-
-    <p class="text-philippine-grey text-xs font-light mt-[1px]">
-      Figma mockup.
-    </p>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Tech Architecture and Stack
-    </h2>
-    <p class="text-sm/6 sm:text-base/7">Opted for JAMStack:</p>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">Astro (with React), Tailwind.</li>
-      <li class="text-sm/6 sm:text-base/7">Contentful CMS, Analytics, etc.</li>
-      <li class="text-sm/6 sm:text-base/7">Vercel for static deployments.</li>
-    </ul>
-
-    <h3 class="font-medium mt-3 flex flex-wrap sm:text-lg sm:mt-4">
-      Why JAMstack?
-    </h3>
-    <p class="text-sm/6 sm:text-base/7">
-      Such as WordPress, hard-coded markdown templates or monoliths:
-    </p>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        Easier to achieve performance goals.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Easier to scale (vs. hard-coded templates and monoliths).
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Can integrate with non-technical CMS without associated bloat.
-      </li>
-    </ul>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Features
-    </h2>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Fully-responsive user interface</span>:
-        built with Tailwind, Astro pages and React components.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Infinite scrolling</span>: dynamically
-        loaded content on scroll to improve performance and UX simultaneously.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold"
-          >Dynamic content via Contentful integration</span
-        >: CMS can support new categories, authors and so on without any
-        additional config.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">SEO</span>: robust technical SEO
-        optimisation.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">CI/CD pipeline</span>: integrated with
-        GitHub actions to automate Vercel deployments.
-      </li>
-    </ul>
-
-    <img src="./tr3-mockup-article.jpg" alt="tr3 running article mockup" />
-
-    <p class="text-philippine-grey text-xs font-light -mt-2 mt-[1px]">
-      tr3 running article mockup.
-    </p>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Challenges + Solutions
-    </h2>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Contentful integration</span>: the
-        Contentful docs aren't great. I had to do a trial-and-error to figure
-        some things out. Contentful also doesn't play well with TypeScript.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Performance</span>: I initially
-        misunderstood that JAMStack is not enough to guarantee performance.
-        Extra steps included implementing delayed content load by partially
-        loading on the server, and loading the rest of the content on the
-        client.
-      </li>
-    </ul>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Impact + Reflection
-    </h2>
-    <p class="text-sm/6 sm:text-base/7">
-      I'm happy with the end product. I've created a basic platform that is:
-    </p>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Performant:</span> high scores with Google Lighthouse.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Scalable</span>: is setup to support small
-        content but can easily scale
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <span class="font-semibold">Fun and easy to work with</span>
-      </li>
-    </ul>
-    <p class="text-sm/6 sm:text-base/7">
-      And the project gave me an opportunity to deliver an end-to-end JAMStack
-      website.
-    </p>
-
-    <img src="./tr3-mockup-vt1.jpg" alt="tr3 running VT1 page mockup" />
-    <p class="text-philippine-grey text-xs font-light -mt-2 mt-[1px]">
-      <a href="https://tr3.run/vt1-calculator">VT1 Calculator</a>
-    </p>
-
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      What's missing?
-    </h2>
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        Contentful changes don't trigger a Vercel deployment. They are currently
-        triggered manually or via a commit to main.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Performance tests when the site delivers vast volumes of content.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">Scalable navigation on mobile.</li>
-    </ul>
-  </section>
+  <p class="text-sm/6 sm:text-base/7">
+    <span class="font-semibold"
+      ><a href="https://tr3.run" target="_blank">tr3 running</a> is a running publication</span
+    > that aims to deliver <span class="font-semibold"
+      >high-quality, science-backed content</span
+    > for serious runners.
+  </p>
 </Layout>
+
+<img
+  class="col-span-8 col-start-3 my-6"
+  src="./tr3-mockup-home.jpg"
+  alt="tr3 running homepage mockup"
+/>
+
+<section class="grid gap-2 col-span-6 col-start-4">
+  <p class="text-sm/6 sm:text-base/7">
+    <span class="font-semibold">What:</span> tr3 is a lightweight, performant JAMstack
+    content network using <a href="https://www.contentful.com/" target="_blank"
+      >Contentful</a
+    > as a headless CMS, an <a href="https://astro.build/" target="_blank"
+      >Astro</a
+    > and React SSG frontend, and deployed with <a
+      href="https://vercel.com/"
+      target="_blank">Vercel</a
+    > and GitHub Actions.
+  </p>
+
+  <p class="text-sm/6 sm:text-base/7">
+    <span class="font-semibold">Why:</span> to combine my passion for running with
+    hands-on experience in modern web development.
+  </p>
+
+  <p class="text-sm/6 sm:text-base/7">
+    <span class="font-semibold">Goal:</span> a sleek, clean and premium website delivering
+    trustworthy running content that can scale as needed. This can be achieved through:
+  </p>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">Non-technical content management.</li>
+    <li class="text-sm/6 sm:text-base/7">Performance, even at scale.</li>
+    <li class="text-sm/6 sm:text-base/7">
+      Setup for vast content (articles, authors, categories, etc) from the
+      get-go.
+    </li>
+  </ul>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    Motivation
+  </h2>
+  <p class="text-sm/6 sm:text-base/7">
+    Why build the platform from scratch instead of a pre-built solution, such as
+    WordPress? Several reasons:
+  </p>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Long-term cadence:</span> it's more upfront work,
+      but less long-term work. WordPress gets you off the ground quickly, but can
+      be painful to work with &mdash; and it's not fun.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Performance:</span> easier to create a light-weight
+      site without bloat.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Ownership and UX:</span> full control of the end-to-end
+      user experience.
+    </li>
+  </ul>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    Design and UX
+  </h2>
+
+  <p class="text-sm/6 sm:text-base/7">
+    <span class="font-semibold">Objective:</span> minimal, premium design that inspires
+    confidence. Designed mobile first with accessibility and UX as a priority.
+  </p>
+
+  <img src="./tr3-figma.jpg" alt="tr3 running Figma design" />
+
+  <p class="text-philippine-grey text-xs font-light mt-[1px]">Figma mockup.</p>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    Tech Architecture and Stack
+  </h2>
+  <p class="text-sm/6 sm:text-base/7">Opted for JAMStack:</p>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">Astro (with React), Tailwind.</li>
+    <li class="text-sm/6 sm:text-base/7">Contentful CMS, Analytics, etc.</li>
+    <li class="text-sm/6 sm:text-base/7">Vercel for static deployments.</li>
+  </ul>
+
+  <h3 class="font-medium mt-3 flex flex-wrap sm:text-lg sm:mt-4">
+    Why JAMstack?
+  </h3>
+  <p class="text-sm/6 sm:text-base/7">
+    Such as WordPress, hard-coded markdown templates or monoliths:
+  </p>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">
+      Easier to achieve performance goals.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      Easier to scale (vs. hard-coded templates and monoliths).
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      Can integrate with non-technical CMS without associated bloat.
+    </li>
+  </ul>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    Features
+  </h2>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Fully-responsive user interface</span>: built
+      with Tailwind, Astro pages and React components.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Infinite scrolling</span>: dynamically loaded
+      content on scroll to improve performance and UX simultaneously.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold"
+        >Dynamic content via Contentful integration</span
+      >: CMS can support new categories, authors and so on without any
+      additional config.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">SEO</span>: robust technical SEO optimisation.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">CI/CD pipeline</span>: integrated with GitHub
+      actions to automate Vercel deployments.
+    </li>
+  </ul>
+
+  <img src="./tr3-mockup-article.jpg" alt="tr3 running article mockup" />
+
+  <p class="text-philippine-grey text-xs font-light -mt-2 mt-[1px]">
+    tr3 running article mockup.
+  </p>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    Challenges + Solutions
+  </h2>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Contentful integration</span>: the Contentful
+      docs aren't great. I had to do a trial-and-error to figure some things
+      out. Contentful also doesn't play well with TypeScript.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Performance</span>: I initially misunderstood
+      that JAMStack is not enough to guarantee performance. Extra steps included
+      implementing delayed content load by partially loading on the server, and
+      loading the rest of the content on the client.
+    </li>
+  </ul>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    Impact + Reflection
+  </h2>
+  <p class="text-sm/6 sm:text-base/7">
+    I'm happy with the end product. I've created a basic platform that is:
+  </p>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Performant:</span> high scores with Google Lighthouse.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Scalable</span>: is setup to support small
+      content but can easily scale
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold">Fun and easy to work with</span>
+    </li>
+  </ul>
+  <p class="text-sm/6 sm:text-base/7">
+    And the project gave me an opportunity to deliver an end-to-end JAMStack
+    website.
+  </p>
+
+  <img src="./tr3-mockup-vt1.jpg" alt="tr3 running VT1 page mockup" />
+  <p class="text-philippine-grey text-xs font-light -mt-2 mt-[1px]">
+    <a href="https://tr3.run/vt1-calculator">VT1 Calculator</a>
+  </p>
+
+  <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    What's missing?
+  </h2>
+  <ul class="list-disc ml-4">
+    <li class="text-sm/6 sm:text-base/7">
+      Contentful changes don't trigger a Vercel deployment. They are currently
+      triggered manually or via a commit to main.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">
+      Performance tests when the site delivers vast volumes of content.
+    </li>
+    <li class="text-sm/6 sm:text-base/7">Scalable navigation on mobile.</li>
+  </ul>
+</section>

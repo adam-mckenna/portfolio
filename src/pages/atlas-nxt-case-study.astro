@@ -20,9 +20,7 @@ import Layout from "../layouts/Layout.astro";
 
     <h1 class="text-4xl font-semibold lg:text-5xl">AtlasNXT</h1>
 
-
     <div class="flex flex-wrap gap-3 opacity-75">
-  
       <div class="flex flex-wrap gap-1.5">
         <div
           class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
@@ -42,255 +40,277 @@ import Layout from "../layouts/Layout.astro";
       </div>
       <div class="flex flex-wrap gap-1.5">
         <div
-        class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
-      >
-        Elixir & Phoenix
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Elixir & Phoenix
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          JavaScript
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          HTML
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Tailwind
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Mapbox
+        </div>
       </div>
-      <div
-        class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
-      >
-        JavaScript
-      </div>
-      <div
-        class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
-      >
-        HTML
-      </div>
-      <div
-        class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
-      >
-        Tailwind
-      </div>
-      <div
-        class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
-      >
-        Mapbox
-      </div>
-      </div>
-      </div>
+    </div>
 
     <p class="text-sm/6 sm:text-base/7">
       <span class="font-semibold"
-        ><a href="https://atlasnxt.com/" target="_blank">AtlasNXT</a> is a duty-of-care platform used by organisations including the BBC, UN and FCDO.</span
+        ><a href="https://atlasnxt.com/" target="_blank">AtlasNXT</a> is a duty-of-care
+        platform used by organisations including the BBC, UN and FCDO.</span
+      >
     </p>
-  </header>
 
-  <img
-    class="col-span-8 col-start-3 my-6"
-    src="./atlas-nxt-mockup.png"
-    alt="AtlasNXT application mockup"
-  />
-
-  <section class="grid gap-2 col-span-6 col-start-4">
-    <p class="text-sm/6 sm:text-base/7">
-      <strong>AtlasNXT is a SaaS duty-of-care platform developed by Track24</strong> to help
-      organisations monitor and protect their staff in
-      <strong>high-risk environments</strong>, such as conflict zones or politically
-      unstable regions. The platform is two-fold:
-      <strong>a real-time map interface for operators</strong>, and
-      <strong>a field app / Garmin InReach device</strong> used by employees who can be
-      alerted to dangers and tracked to ensure they stay safe.
-    </p>
-  
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"> 
-      Context &amp; Problem
-    </h2>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      When I joined Track24 at the end of 2024, AtlasNXT was already
-      <strong>live and functional</strong>. The Elixir Phoenix application had been built by
-      a <strong>rotating door of contractors working largely in silo</strong>. While the
-      platform worked functionally, the frontend experience lagged behind:
-    </p>
-  
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>UI consistency was extremely poor</strong>, with many elements minimally
-        designed or left with browser defaults.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>User flows felt fragmented</strong>.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Little visual feedback, animation, or polish</strong>.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        The interface <strong>did not inspire confidence</strong> proportional to the
-        seriousness of the product’s use cases.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        The platform met baseline requirements but offered
-        <strong>no customer delight</strong>.
-      </li>
-    </ul>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      Given AtlasNXT’s use in <strong>genuinely high-stakes situations</strong>, these issues
-      directly affected <strong>usability, trust, and operator efficiency</strong>, and
-      made the product <strong>harder to market and sell</strong>.
-    </p>
-  
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
-      My Role
-    </h2>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      I joined as the de facto
-      <strong>Lead Frontend Engineer</strong>, with ownership over
-      <strong>user experience and frontend architecture</strong>. I wasn’t hired to ship
-      major new features initially, but to
-      <strong>raise the quality bar across the application</strong> and transform a purely
-      functional interface into one that felt
-      <strong>deliberate, trustworthy, and calm under pressure</strong>.
-    </p>
-  
     <img
-      src="./atlas-nxt-animation.gif"
-      class="mt-2"
-      alt="AtlasNXT UI animation"
-      loading="lazy"
-      decoding="async"
+      class="col-span-8 col-start-3 my-6"
+      src="./atlas-nxt-mockup.png"
+      alt="AtlasNXT application mockup"
     />
-    <p class="text-philippine-grey text-xs font-light mt-[1px]">
-      Subtle UI animations introduced across the platform.
-    </p>
-  
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
-      Approach
-    </h2>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      Rather than a single large redesign, my first six months focused on
-      <strong>systematic, incremental improvements</strong> across the entire UI:
-    </p>
-  
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        Worked closely with the in-house product designer to
-        <strong>identify and prioritise UX improvements</strong>.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Documented and tracked UX issues</strong> extensively in Linear.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Audited the application to surface
-        <strong>repeated UX pain points and inconsistencies</strong>.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Standardised layouts, typography, and interaction patterns</strong> via a
+
+    <section class="grid gap-2 col-span-6 col-start-4">
+      <p class="text-sm/6 sm:text-base/7">
+        <strong
+          >AtlasNXT is a SaaS duty-of-care platform developed by Track24</strong
+        > to help organisations monitor and protect their staff in
+        <strong>high-risk environments</strong>, such as conflict zones or
+        politically unstable regions. The platform is two-fold:
+        <strong>a real-time map interface for operators</strong>, and
+        <strong>a field app / Garmin InReach device</strong> used by employees who
+        can be alerted to dangers and tracked to ensure they stay safe.
+      </p>
+
+      <h2
+        class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+      >
+        Context &amp; Problem
+      </h2>
+
+      <p class="text-sm/6 sm:text-base/7">
+        When I joined Track24 at the end of 2024, AtlasNXT was already
+        <strong>live and functional</strong>. The Elixir Phoenix application had
+        been built by a <strong
+          >rotating door of contractors working largely in silo</strong
+        >. While the platform worked functionally, the frontend experience
+        lagged behind:
+      </p>
+
+      <ul class="list-disc ml-4">
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>UI consistency was extremely poor</strong>, with many elements
+          minimally designed or left with browser defaults.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>User flows felt fragmented</strong>.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>Little visual feedback, animation, or polish</strong>.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          The interface <strong>did not inspire confidence</strong> proportional
+          to the seriousness of the product’s use cases.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          The platform met baseline requirements but offered
+          <strong>no customer delight</strong>.
+        </li>
+      </ul>
+
+      <p class="text-sm/6 sm:text-base/7">
+        Given AtlasNXT’s use in <strong>genuinely high-stakes situations</strong
+        >, these issues directly affected <strong
+          >usability, trust, and operator efficiency</strong
+        >, and made the product <strong>harder to market and sell</strong>.
+      </p>
+
+      <h2
+        class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+      >
+        My Role
+      </h2>
+
+      <p class="text-sm/6 sm:text-base/7">
+        I joined as the de facto
+        <strong>Lead Frontend Engineer</strong>, with ownership over
+        <strong>user experience and frontend architecture</strong>. I wasn’t
+        hired to ship major new features initially, but to
+        <strong>raise the quality bar across the application</strong> and transform
+        a purely functional interface into one that felt
+        <strong>deliberate, trustworthy, and calm under pressure</strong>.
+      </p>
+
+      <img
+        src="./atlas-nxt-animation.gif"
+        class="mt-2"
+        alt="AtlasNXT UI animation"
+        loading="lazy"
+        decoding="async"
+      />
+      <p class="text-philippine-grey text-xs font-light mt-[1px]">
+        Subtle UI animations introduced across the platform.
+      </p>
+
+      <h2
+        class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+      >
+        Approach
+      </h2>
+
+      <p class="text-sm/6 sm:text-base/7">
+        Rather than a single large redesign, my first six months focused on
+        <strong>systematic, incremental improvements</strong> across the entire UI:
+      </p>
+
+      <ul class="list-disc ml-4">
+        <li class="text-sm/6 sm:text-base/7">
+          Worked closely with the in-house product designer to
+          <strong>identify and prioritise UX improvements</strong>.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>Documented and tracked UX issues</strong> extensively in Linear.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          Audited the application to surface
+          <strong>repeated UX pain points and inconsistencies</strong>.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong
+            >Standardised layouts, typography, and interaction patterns</strong
+          > via a Figma design system.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          Introduced subtle animations to
+          <strong>increase customer delight and saleability</strong>.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>Overhauled high-visibility views</strong> such as the login experience.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          Implemented <strong>accessibility best practices</strong>: focus
+          states, labelling, tab ordering, empty/loading/error states.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          Reduced visual noise in
+          <strong>critical workflows where speed and clarity matter most</strong
+          >.
+        </li>
+      </ul>
+
+      <img
+        src="./atlas-nxt-mockup-figma.png"
+        class="mt-2"
+        alt="AtlasNXT Figma design system"
+        loading="lazy"
+        decoding="async"
+      />
+      <p class="text-philippine-grey text-xs font-light mt-[1px]">
         Figma design system.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Introduced subtle animations to
-        <strong>increase customer delight and saleability</strong>.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Overhauled high-visibility views</strong> such as the login experience.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Implemented <strong>accessibility best practices</strong>: focus states, labelling,
-        tab ordering, empty/loading/error states.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Reduced visual noise in
-        <strong>critical workflows where speed and clarity matter most</strong>.
-      </li>
-    </ul>
-  
-    <img
-      src="./atlas-nxt-mockup-figma.png"
-      class="mt-2"
-      alt="AtlasNXT Figma design system"
-      loading="lazy"
-      decoding="async"
-    />
-    <p class="text-philippine-grey text-xs font-light mt-[1px]">
-      Figma design system.
-    </p>
-  
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
-      Key Contributions
-    </h2>
-  
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Established a consistent visual and interaction language</strong> across
-        the application.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Refactored ad-hoc UI into
-        <strong>reusable, predictable Phoenix components</strong>.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Improved operator confidence and delight</strong> through usability and
-        polish.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Elevated perceived product quality</strong> without disrupting workflows.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        <strong>Improved accessibility compliance</strong>, a key requirement for
-        government contracts.
-      </li>
-    </ul>
+      </p>
 
-    <img
-      src="./atlas-nxt-login-before-after.png"
-      class="mt-2"
-      alt="AtlasNXT login page before and after re-design"
-      loading="lazy"
-      decoding="async"
-    />
-    <p class="text-philippine-grey text-xs font-light mt-[1px]">
-      Login page before and after re-design.
-    </p>
-  
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
-      Outcome
-    </h2>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      While much of the work was subtle, the
-      <strong>cumulative effect was significant</strong>. AtlasNXT evolved from feeling like
-      an internal tool into a
-      <strong>polished, production-grade platform</strong> suitable for enterprise and
-      government clients.
-    </p>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      The improved frontend foundation made
-      <strong>subsequent feature development faster and safer</strong>, supported by a
-      coherent UI system and reusable components.
-    </p>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      These changes translated into
-      <strong>real business impact</strong>, with clients and stakeholders explicitly
-      complimenting the animations and redesigned login experience.
-    </p>
-  
-    <img
-      src="./atlas-nxt-animation-heatmap.gif"
-      class="mt-2"
-      alt="AtlasNXT UI heatmap animation"
-      loading="lazy"
-      decoding="async"
-    />
-    <p class="text-philippine-grey text-xs font-light mt-[1px]">
-      Heatmap animation.
-    </p>
-  
-  
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
-      Reflection
-    </h2>
-  
-    <p class="text-sm/6 sm:text-base/7">
-      This project reinforced the value of
-      <strong>quality over quantity</strong>. By focusing on consistency, usability, and
-      polish — and extrapolating those improvements across the system — AtlasNXT became
-      <strong>more trustworthy, calmer, and more delightful</strong> for both existing and
-      future customers.
-    </p>
-  </section>  
+      <h2
+        class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+      >
+        Key Contributions
+      </h2>
+
+      <ul class="list-disc ml-4">
+        <li class="text-sm/6 sm:text-base/7">
+          <strong
+            >Established a consistent visual and interaction language</strong
+          > across the application.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          Refactored ad-hoc UI into
+          <strong>reusable, predictable Phoenix components</strong>.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>Improved operator confidence and delight</strong> through usability
+          and polish.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>Elevated perceived product quality</strong> without disrupting
+          workflows.
+        </li>
+        <li class="text-sm/6 sm:text-base/7">
+          <strong>Improved accessibility compliance</strong>, a key requirement
+          for government contracts.
+        </li>
+      </ul>
+
+      <img
+        src="./atlas-nxt-login-before-after.png"
+        class="mt-2"
+        alt="AtlasNXT login page before and after re-design"
+        loading="lazy"
+        decoding="async"
+      />
+      <p class="text-philippine-grey text-xs font-light mt-[1px]">
+        Login page before and after re-design.
+      </p>
+
+      <h2
+        class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+      >
+        Outcome
+      </h2>
+
+      <p class="text-sm/6 sm:text-base/7">
+        While much of the work was subtle, the
+        <strong>cumulative effect was significant</strong>. AtlasNXT evolved
+        from feeling like an internal tool into a
+        <strong>polished, production-grade platform</strong> suitable for enterprise
+        and government clients.
+      </p>
+
+      <p class="text-sm/6 sm:text-base/7">
+        The improved frontend foundation made
+        <strong>subsequent feature development faster and safer</strong>,
+        supported by a coherent UI system and reusable components.
+      </p>
+
+      <p class="text-sm/6 sm:text-base/7">
+        These changes translated into
+        <strong>real business impact</strong>, with clients and stakeholders
+        explicitly complimenting the animations and redesigned login experience.
+      </p>
+
+      <img
+        src="./atlas-nxt-animation-heatmap.gif"
+        class="mt-2"
+        alt="AtlasNXT UI heatmap animation"
+        loading="lazy"
+        decoding="async"
+      />
+      <p class="text-philippine-grey text-xs font-light mt-[1px]">
+        Heatmap animation.
+      </p>
+
+      <h2
+        class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+      >
+        Reflection
+      </h2>
+
+      <p class="text-sm/6 sm:text-base/7">
+        This project reinforced the value of
+        <strong>quality over quantity</strong>. By focusing on consistency,
+        usability, and polish — and extrapolating those improvements across the
+        system — AtlasNXT became
+        <strong>more trustworthy, calmer, and more delightful</strong> for both existing
+        and future customers.
+      </p>
+    </section>
+  </header>
 </Layout>
