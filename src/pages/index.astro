@@ -613,14 +613,81 @@ import Layout from "../layouts/Layout.astro";
 
       <article class="mt-2 sm:mt-4 sm:grid sm:grid-cols-12 sm:gap-6">
         <div class="grid gap-1 content-start sm:col-span-8">
-          <h3 class="font-semibold flex flex-wrap sm:text-1xl lg:text-2xl">
+          <h3 class="font-semibold flex flex-wrap sm:text-xl lg:text-1xl">
+            <a
+              class="cursor-pointer flex items-center gap-1 text-black no-underline"
+              href="/atlas-bridge-etl-case-study"
+              target="_blank"
+              >Atlas Bridge: ETL sync</a
+            >
+          </h3>
+
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
+            <div
+              class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+            >
+              Node.js
+            </div>
+            <div
+              class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+            >
+              Koa
+            </div>
+            <div
+              class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+            >
+              ETL
+            </div>
+            <div
+              class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+            >
+              CronJob
+            </div>
+            <div
+              class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+            >
+              Datadog
+            </div>
+          </div>
+
+          <p class="text-sm/6 sm:text-base/7 mt-1">
+            An <strong>ETL bridge</strong> that keeps a legacy <strong>Phoenix monolith</strong> and a modern <strong>
+            micro-services platform </strong> consistent via bi-directional sync, transactional
+            safety, and timestamp-based conflict resolution.
+          </p>
+
+          <a
+            href="/atlas-bridge-etl-case-study"
+            class="rounded bg-secondary text-background font-medium text-sm opacity-90 text-center py-2 mt-2 group transition-all hover:opacity-100 hover:text-background hover:animate-pulse no-underline"
+          >
+            Case study
+            <img
+              class="inline-block w-2 lg:w-3 rotate-180 lg:ml-1"
+              src="./icons/arrow-white.svg"
+              alt=""
+            />
+          </a>
+        </div>
+
+        <div class="mt-4 sm:mt-1 sm:col-span-4 sm:order-first">
+          <img
+            alt="Atlas Bridge cover"
+            class="rounded shadow-sm"
+            src="./atlas-bridge-cover.png"
+          />
+        </div>
+      </article>
+
+      <article class="mt-8 sm:mt-10 sm:grid sm:grid-cols-12 sm:gap-6">
+        <div class="grid gap-1 content-start sm:col-span-8">
+          <h3 class="font-semibold flex flex-wrap sm:text-xl lg:text-1xl">
             <a
               class="cursor-pointer flex items-center gap-1 text-black no-underline"
               href="/tr3-running-case-study"
               target="_blank">tr3 running</a
             >
           </h3>
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div
               class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
             >
@@ -653,7 +720,7 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
 
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
               <a
                 class="cursor-pointer flex no-underline justify-center text-primary-dark"
@@ -707,7 +774,7 @@ import Layout from "../layouts/Layout.astro";
             >
           </h3>
 
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div
               class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
             >
@@ -735,7 +802,7 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
 
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
               <a
                 class="flex no-underline justify-center text-primary-dark"
@@ -791,7 +858,7 @@ import Layout from "../layouts/Layout.astro";
               /></a
             >
           </h3>
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div
               class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
             >
@@ -818,7 +885,7 @@ import Layout from "../layouts/Layout.astro";
               PWA
             </div>
           </div>
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
               <a
                 class="flex no-underline justify-center text-primary-dark"
@@ -873,7 +940,7 @@ import Layout from "../layouts/Layout.astro";
               /></a
             >
           </h3>
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div
               class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
             >
@@ -895,7 +962,7 @@ import Layout from "../layouts/Layout.astro";
               Material UI
             </div>
           </div>
-          <div class="flex flex-wrap mt-2 gap-1.5 opacity-75">
+          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
               <a
                 class="flex no-underline justify-center text-primary-dark"

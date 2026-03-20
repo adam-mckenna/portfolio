@@ -1,0 +1,309 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+
+const atlasBridgeMigrateDataCode = String.raw`// Paginate tenant Postgres (Knex) with offset/limit. Process each page in parallel,
+// recurse until a short page. Stages ordered: users/staff → teams/categories → geofences/members → reconcile deletes.
+// e.g. Promise.all([ batchProcess(users...), batchProcess(staff...), ... ])
+
+async function batchProcess<R, P>(
+  retrieve: (offset: number, limit: number) => Promise<R[]>,
+  processor: (row: R) => Promise<P>,
+  offset = 0,
+  limit = 100,
+): Promise<P[]> {
+  const records = await retrieve(offset, limit);
+  const processed = await Promise.all(records.map(processor));
+  if (records.length === limit) {
+    return [...processed, ...(await batchProcess(retrieve, processor, offset + limit, limit))];
+  }
+  return processed;
+}`;
+
+const atlasBridgeJobsSyncCode = String.raw`// Per-tenant CronJob: labels for org/tenant, schedule from config, tight job history,
+// single completion. Container runs the compiled sync entrypoint (not the HTTP server).
+const cronJob = {
+  kind: 'CronJob',
+  metadata: { labels: { /* org id, tenant name, component: sync-job */ } },
+  spec: {
+    schedule: config.cron.schedule,
+    failedJobsHistoryLimit: 0,
+    successfulJobsHistoryLimit: 1,
+    startingDeadlineSeconds: 120,
+    jobTemplate: {
+      spec: {
+        completions: 1,
+        template: {
+          spec: {
+            containers: [{
+              name: 'sync',
+              image: config.job.image,
+              command: ['/nodejs/bin/node', '--require=dd-trace/init', 'src/job.js'],
+              env: [ /* TENANT_*, DATABASE_*, service hostnames, … */ ],
+            }],
+            restartPolicy: 'OnFailure',
+          },
+        },
+      },
+    },
+  },
+};`;
+---
+
+<Layout
+  title="Atlas Bridge (ETL) Case Study | Adam McKenna | Full Stack Developer"
+  description="Atlas Bridge is an ETL sync system built with Node.js and Koa, keeping two production data systems consistent."
+>
+  <header
+    class="col-start-5 w-full col-span-4 justify-center grid gap-2 md:gap-4"
+  >
+    <a
+      class="mb-4 md:mb-0 text-xs md:text-base flex items-center gap-2 no-underline"
+      href="/"
+    >
+      <img class="w-4 md:w-7" src="./icons/arrow.svg" />
+      Back to home
+    </a>
+    <h2 class="text-base md:text-lg text-primary-dark -mb-1">case study</h2>
+
+    <h1 class="text-4xl font-semibold lg:text-5xl">Atlas Bridge</h1>
+
+    <div class="flex flex-wrap gap-3 opacity-75">
+      <div class="flex flex-wrap gap-1.5">
+        <div
+          class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          ETL
+        </div>
+        <div
+          class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Backend
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-1.5">
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Node.js
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Koa
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Datadog
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          CronJob
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Transactions
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Conflict resolution
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm/6 sm:text-base/7">
+      Built a bi-directional ETL bridge that keeps the legacy Atlas Phoenix
+      monolith and the modern Atlas micro-services platform consistent during a
+      long deprecation period.
+    </p>
+  </header>
+
+  <img
+    class="col-span-8 col-start-3 my-6 rounded shadow-sm"
+    src="./atlas-bridge-cover.png"
+    alt="Atlas Bridge cover"
+  />
+
+  <section class="grid gap-2 col-span-6 col-start-4">
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Overview &amp; Problem
+    </h2>
+
+    <p class="text-sm/6 sm:text-base/7">
+      The
+      <a
+        href="https://atlasnxt.com/"
+        target="_blank"
+        rel="noopener noreferrer">Atlas</a
+      >
+      ecosystem consists of a legacy
+      <a
+        href="https://www.phoenixframework.org/"
+        target="_blank"
+        rel="noopener noreferrer">Phoenix monolith</a
+      >
+      and the new full-stack JavaScript Atlas Platform built as micro-services.
+    </p>
+
+    <p class="text-sm/6 sm:text-base/7">
+      Both systems are temporarily running in parallel in production until we
+      deprecate the legacy monolith. Without a sync mechanism, data between
+      the systems would quickly become inconsistent, leading to operational
+      issues and increased maintenance overhead.
+    </p>
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Solution
+    </h2>
+
+    <p class="text-sm/6 sm:text-base/7">
+      I built Atlas Bridge, an ETL system in Node.js, using
+      <a
+        href="https://koajs.com/"
+        target="_blank"
+        rel="noopener noreferrer">Koa</a
+      >, that keeps both systems in sync automatically. It handles
+      bi-directional data flow, ensures transactional integrity, and
+      leverages
+      <a
+        href="https://www.datadoghq.com/"
+        target="_blank"
+        rel="noopener noreferrer">Datadog</a
+      >
+      observability for production reliability.
+    </p>
+
+    <p class="text-sm/6 sm:text-base/7">
+      Atlas Bridge runs on a scheduled CronJob that checks for data changes
+      every minute using the
+      <code class="font-mono">updated_at</code>
+      field in both databases to determine the most recent change.
+    </p>
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      System Architecture
+    </h2>
+
+    <img
+      class="w-full rounded shadow-sm"
+      src="./atlas-bridge-diagram.png"
+      alt="Atlas Bridge (ETL + Koa) system architecture diagram"
+      loading="lazy"
+      decoding="async"
+    />
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Highlights
+    </h2>
+
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Atlas Bridge sits at the centre, handling ETL, data transformation, and
+        conflict resolution.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Cronjobs trigger scheduled syncs, ensuring up-to-date consistency.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Datadog observability provides metrics, alerting, and dashboards for
+        system health and reliability.
+      </li>
+    </ul>
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Technical Challenges &amp; Solutions
+    </h2>
+
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Bi-directional sync:</strong> prevented overwriting newer
+        updates via timestamp-based conflict resolution.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Schema differences:</strong> transformation layer reconciles
+        legacy Atlas fields with new micro-service schemas.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Transactional safety:</strong> database transactions ensure atomic
+        updates and prevent partial writes.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Production reliability:</strong> observability in Datadog ensures
+        failures are detected, tracked, and alerted immediately.
+      </li>
+    </ul>
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Code Snippets
+    </h2>
+
+    <div class="grid gap-6 min-w-0">
+      <div class="min-w-0">
+        <CodeBlock code={atlasBridgeMigrateDataCode} lang="ts" />
+        <p class="text-philippine-grey text-xs font-light mt-2">
+          Batched, ordered ETL from tenant DB into platform services with explicit reconciliation passes.
+        </p>
+      </div>
+
+      <div class="min-w-0">
+        <CodeBlock code={atlasBridgeJobsSyncCode} lang="ts" />
+        <p class="text-philippine-grey text-xs font-light mt-2">
+          Kubernetes CronJobs created/updated from Node; sync workload runs under dd-trace.
+        </p>
+      </div>
+    </div>
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Impact &amp; Metrics
+    </h2>
+
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Syncs thousands of records per run with <strong>zero data inconsistencies</strong>.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Reduces manual reconciliation</strong> across production
+        systems, saving hundreds of man-hours.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Minimises urgency</strong> to remove legacy system, ensuring
+        that we can continue to deliver new features and de-prioritise
+        rebuilding existing services.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Datadog dashboards</strong> provide real-time monitoring of ETL
+        health, sync latency, and error rates.
+      </li>
+    </ul>
+
+    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+      Skills Demonstrated
+    </h2>
+
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Backend system design</strong> with Node.js and Koa.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>ETL pipeline architecture</strong>.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Database design, transactions, and indexing.</strong>
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Scheduling, automation, and failure recovery.</strong>
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Observability and production monitoring using Datadog.</strong>
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Bi-directional data synchronisation and conflict resolution.</strong>
+      </li>
+    </ul>
+  </section>
+</Layout>
+

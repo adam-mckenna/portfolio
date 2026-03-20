@@ -1,0 +1,50 @@
+---
+import { codeToHtml } from "shiki";
+
+interface Props {
+  title?: string;
+  code: string;
+  lang?: string;
+  theme?: string;
+}
+
+const {
+  title,
+  code,
+  lang = "ts",
+  theme = "github-dark-dimmed",
+} = Astro.props as Props;
+
+const highlighted = codeToHtml(code, { lang, theme });
+---
+
+<div class="w-full">
+  {title ? (
+    <div class="text-xs font-semibold text-primary-dark/70 mb-2">{title}</div>
+  ) : null}
+
+  <div
+    class="w-full min-w-0 overflow-x-auto rounded-lg border border-white/10 bg-[#1e1e1e] px-4 py-4"
+  >
+    <div
+      class="codeblock"
+      set:html={highlighted}
+      aria-label={title ? title : "code snippet"}
+    />
+  </div>
+</div>
+
+<style is:global>
+  .codeblock pre {
+    margin: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    white-space: pre !important;
+  }
+
+  .codeblock code {
+    font-family: inherit !important;
+  }
+</style>
+
