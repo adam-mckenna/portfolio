@@ -129,16 +129,16 @@ const cronJob = {
   />
 
   <section class="grid gap-2 col-span-6 col-start-4">
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Overview &amp; Problem
     </h2>
 
     <p class="text-sm/6 sm:text-base/7">
       The
-      <a
-        href="https://atlasnxt.com/"
-        target="_blank"
-        rel="noopener noreferrer">Atlas</a
+      <a href="https://atlasnxt.com/" target="_blank" rel="noopener noreferrer"
+        >Atlas</a
       >
       ecosystem consists of a legacy
       <a
@@ -151,24 +151,23 @@ const cronJob = {
 
     <p class="text-sm/6 sm:text-base/7">
       Both systems are temporarily running in parallel in production until we
-      deprecate the legacy monolith. Without a sync mechanism, data between
-      the systems would quickly become inconsistent, leading to operational
-      issues and increased maintenance overhead.
+      deprecate the legacy monolith. Without a sync mechanism, data between the
+      systems would quickly become inconsistent, leading to operational issues
+      and increased maintenance overhead.
     </p>
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Solution
     </h2>
 
     <p class="text-sm/6 sm:text-base/7">
       I built Atlas Bridge, an ETL system in Node.js, using
-      <a
-        href="https://koajs.com/"
-        target="_blank"
-        rel="noopener noreferrer">Koa</a
+      <a href="https://koajs.com/" target="_blank" rel="noopener noreferrer"
+        >Koa</a
       >, that keeps both systems in sync automatically. It handles
-      bi-directional data flow, ensures transactional integrity, and
-      leverages
+      bi-directional data flow, ensures transactional integrity, and leverages
       <a
         href="https://www.datadoghq.com/"
         target="_blank"
@@ -184,7 +183,9 @@ const cronJob = {
       field in both databases to determine the most recent change.
     </p>
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       System Architecture
     </h2>
 
@@ -196,7 +197,9 @@ const cronJob = {
       decoding="async"
     />
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Highlights
     </h2>
 
@@ -214,18 +217,20 @@ const cronJob = {
       </li>
     </ul>
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Technical Challenges &amp; Solutions
     </h2>
 
     <ul class="list-disc ml-4">
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Bi-directional sync:</strong> prevented overwriting newer
-        updates via timestamp-based conflict resolution.
+        <strong>Bi-directional sync:</strong> prevented overwriting newer updates
+        via timestamp-based conflict resolution.
       </li>
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Schema differences:</strong> transformation layer reconciles
-        legacy Atlas fields with new micro-service schemas.
+        <strong>Schema differences:</strong> transformation layer reconciles legacy
+        Atlas fields with new micro-service schemas.
       </li>
       <li class="text-sm/6 sm:text-base/7">
         <strong>Transactional safety:</strong> database transactions ensure atomic
@@ -237,7 +242,9 @@ const cronJob = {
       </li>
     </ul>
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Code Snippets
     </h2>
 
@@ -245,42 +252,50 @@ const cronJob = {
       <div class="min-w-0">
         <CodeBlock code={atlasBridgeMigrateDataCode} lang="ts" />
         <p class="text-philippine-grey text-xs font-light mt-2">
-          Batched, ordered ETL from tenant DB into platform services with explicit reconciliation passes.
+          Batched, ordered ETL from tenant DB into platform services with
+          explicit reconciliation passes.
         </p>
       </div>
 
       <div class="min-w-0">
         <CodeBlock code={atlasBridgeJobsSyncCode} lang="ts" />
         <p class="text-philippine-grey text-xs font-light mt-2">
-          Kubernetes CronJobs created/updated from Node; sync workload runs under dd-trace.
+          Kubernetes CronJobs created/updated from Node; sync workload runs
+          under dd-trace.
         </p>
       </div>
     </div>
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Impact &amp; Metrics
     </h2>
 
     <ul class="list-disc ml-4">
       <li class="text-sm/6 sm:text-base/7">
-        Syncs thousands of records per run with <strong>zero data inconsistencies</strong>.
+        Syncs thousands of records per run with <strong
+          >zero data inconsistencies</strong
+        >.
       </li>
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Reduces manual reconciliation</strong> across production
-        systems, saving hundreds of man-hours.
+        <strong>Reduces manual reconciliation</strong> across production systems,
+        saving hundreds of man-hours.
       </li>
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Minimises urgency</strong> to remove legacy system, ensuring
-        that we can continue to deliver new features and de-prioritise
-        rebuilding existing services.
+        <strong>Minimises urgency</strong> to remove legacy system, ensuring that
+        we can continue to deliver new features and de-prioritise rebuilding existing
+        services.
       </li>
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Datadog dashboards</strong> provide real-time monitoring of ETL
-        health, sync latency, and error rates.
+        <strong>Datadog dashboards</strong> provide real-time monitoring of ETL health,
+        sync latency, and error rates.
       </li>
     </ul>
 
-    <h2 class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
       Skills Demonstrated
     </h2>
 
@@ -301,9 +316,10 @@ const cronJob = {
         <strong>Observability and production monitoring using Datadog.</strong>
       </li>
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Bi-directional data synchronisation and conflict resolution.</strong>
+        <strong
+          >Bi-directional data synchronisation and conflict resolution.</strong
+        >
       </li>
     </ul>
   </section>
 </Layout>
-

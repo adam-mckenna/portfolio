@@ -1,0 +1,1294 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+
+const exampleInputCode = `1 portion oats, 250ml semi-skimmed milk, large banana, handful raisins, 1 tbsp peanut butter, bunch of crisps ...`;
+const orchestrationCode = `// expediate-api/src/log/log.service.ts
+@Injectable()
+export class LogService {
+  constructor(
+    // These services can be easily swapped out
+    private transformerService: TransformerService,
+    private categoriserService: CategoriserService,
+    private scorerService: ScorerService,
+  ) {}
+
+  create({ log }: LogDto) {
+    const mappedLog = log
+      .split(",")
+      .map(this.transformerService.parse)
+      .map((log) => ({
+        category: this.categoriserService.categorise(log.food),
+        ...log,
+      }));
+
+    return this.scorerService.score(mappedLog);
+  }
+}`;
+const categoriserInterfaceCode = `// expediate-api/src/categoriser/categoriser.interface.ts
+export interface CategoriserInterface {
+  categorise(food: string): FoodCategory;
+}`;
+const scorerInterfaceCode = `// expediate-api/src/scorer/scorer.interface.ts
+export interface ScorerInterface {
+  score(log: Array<LogItem>): ScoredResults;
+}`;
+const unitsMapCode = `// expediate-api/src/transformer/units.map.ts
+export const UnitMap: Record<string, number> = {
+  g: 1,
+  kg: 1000,
+  lb: 454,
+};
+
+export const CategoryToGramsMap: Record<FoodCategory, number> = {
+  fruit: 100,
+  vegetables: 100,
+  "lean-meat-and-fish": 80,
+  "nuts-seeds": 30,
+  "whole-grains": 50,
+  dairy: 40,
+  "refined-grains": 50,
+  sweets: 50,
+  "fried-foods": 50,
+  "fatty-proteins": 80,
+  unknown: 50,
+};`;
+const foodToGramsCode = `export const FoodToGramsMap: Record<string, number> = {
+  sausage: CategoryToGramsMap["fatty-proteins"] / 2,
+  sausages: CategoryToGramsMap["fatty-proteins"] / 2,
+  potato: 50,
+  potatoes: 50,
+  biscuit: CategoryToGramsMap["sweets"] / 2,
+  biscuits: CategoryToGramsMap["sweets"] / 2,
+};`;
+const servingsCode = `// expediate-api/src/scorer/scorer.service.ts
+calculateTotalServings = (food: string, quantity: number, category: FoodCategory, unit?: Unit) => {
+  const unitInGrams = this.convertUnitToGrams(
+    food,
+    unit || "serving",
+    category,
+    quantity,
+  );
+
+  // Always round UP to the nearest serving.
+  return Math.ceil(unitInGrams / CategoryToGramsMap[category]) || 1;
+};
+
+convertUnitToGrams = (food: string, unit: Unit, category: FoodCategory, quantity: number) => {
+  let unitMappedToGrams = 1;
+
+  if (isObjectiveUnit(unit)) {
+    unitMappedToGrams = UnitMap[unit];
+  } else {
+    unitMappedToGrams =
+      FoodToGramsMap[food] ||
+      SubjectiveUnitToGramsCategoryMap[category][unit] ||
+      SubjectiveUnitFallbackCategoryMap[category];
+  }
+
+  return unitMappedToGrams * quantity;
+};`;
+const singulariseCode = `// expediate-api/src/categoriser/foods.map.ts
+const pluralOverrides: Record<string, string> = {
+  berry: "berries",
+  cherry: "cherries",
+  pastry: "pastries",
+  candy: "candies",
+  potato: "potatoes",
+  // ...
+};
+
+export const singularise = (food: string): string => {
+  for (const [singular, plural] of Object.entries(pluralOverrides)) {
+    if (food === plural) return singular;
+  }
+
+  if (food.endsWith("s")) {
+    return food.slice(0, -1);
+  }
+
+  return food;
+};`;
+const categoriserLoopCode = `// expediate-api/src/categoriser/categoriser.service.ts
+const FoodCategoriser = (food: string): FoodCategory => {
+  for (const [category, foods] of Object.entries(FoodCategoryMap)) {
+    food = singularise(food);
+    if (foods.includes(food)) {
+      return category as FoodCategory;
+    }
+  }
+  return "unknown";
+};`;
+const adjectivesCode = `// expediate-api/src/categoriser/foods.map.ts
+export const Grains = [
+  "wheat",
+  "barley",
+  "rice",
+  "pasta",
+  "noodle",
+  "toast",
+  // ...
+];
+
+export const WholeAdjectives = [
+  "whole",
+  "wholemeal",
+  "whole grain",
+  "wild",
+  "stone ground",
+  // ...
+];
+
+export const RefinedAdjectives = [
+  "refined",
+  "white",
+  "regular",
+  "instant",
+  // ...
+];`;
+const grainExpansionCode = `// expediate-api/src/categoriser/foods.map.ts
+"whole-grains": [
+  "oat",
+  "quinoa",
+  "millet",
+  // ...
+  ...Grains.map((grain) =>
+    WholeAdjectives.map((adjective) => \`\${adjective} \${grain}\`),
+  ).flat(),
+],
+
+"refined-grains": [
+  "all-purpose flour",
+  ...Grains,
+  ...Grains.map((grain) =>
+    RefinedAdjectives.map((adjective) => \`\${adjective} \${grain}\`),
+  ).flat(),
+],`;
+const transformerCode = `// expediate-api/src/transformer/transformer.service.ts
+const FillerWords = ["of", "a", "an", "the", ...];
+
+export class TransformerService {
+  parse = (log: string): TransformedLog => {
+    let parts = this.stripFillerWords(log).trim().toLowerCase().split(" ");
+    let index = 0;
+
+    let { quantity, unit, unitType } = this.getQuantityAndUnit(parts[0], parts[1]);
+
+    if (!quantity) {
+      if (unitType == "subjective") index = 1;
+      else index = 0;
+      quantity = 1;
+    } else {
+      if (unitType === "subjective") index = 2;
+      else index = 1;
+    }
+
+    let food: string = "";
+    for (let j = index; j < parts.length; j++) {
+      food += \`\${parts[j]} \`;
+    }
+
+    return {
+      quantity,
+      unit,
+      unitType,
+      food: food
+        .trim()
+        .replace(/[^a-zA-Z0-9 ]+/g, " ")
+        .replace(/\\s+/g, " "),
+    };
+  };
+
+  stripFillerWords = (log: string) =>
+    log
+      .split(" ")
+      .filter((word) => !FillerWords.includes(word.toLowerCase()))
+      .join(" ");
+}`;
+const scoresCode = `// expediate-api/src/scorer/scores.ts
+export const CategoryScores: Record<FoodCategory, number[]> = {
+  fruit: [2, 2, 2, 1, 0, 0],
+  vegetables: [2, 2, 2, 1, 0, 0],
+  "whole-grains": [2, 2, 1, 0, 0, -1],
+  refined-grains: [-1, -1, -2, -2, -2, -2],
+  sweets: [-2, -2, -2, -2, -2, -2],
+  "fatty-proteins": [-1, -1, -2, -2, -2, -2],
+  unknown: [0],
+};`;
+const scoreAccumulationCode = `// expediate-api/src/scorer/scorer.service.ts
+for (let i = 0; i < servings; i++) {
+  const count =
+    categoryLogs[category].logs.reduce(
+      (accumulator, { servings }) => (accumulator += servings),
+      0,
+    ) + i;
+
+  score += scoreArray[Math.min(count, scoreArray.length - 1)];
+}`;
+const transformerTestCode = `// expediate-api/src/transformer/transformer.service.spec.ts
+it("should strip out filler words if provided", () => {
+  const log = "1 portion of white bread";
+  const { unit, food, quantity } = service.parse(log);
+  expect(food).toBe("white bread");
+  expect(unit).toBe("portion");
+  expect(quantity).toBe(1);
+});
+
+it("should give me an objective type based on the unit provided", () => {
+  const log = "100g oats";
+  const { unit, unitType, quantity } = service.parse(log);
+  expect(unit).toBe("g");
+  expect(unitType).toBe("objective");
+  expect(quantity).toBe(100);
+});`;
+const categoriserTestCode = `// expediate-api/src/categoriser/categoriser.service.spec.ts
+it("should categorise both plural and singular foods", () => {
+  const categories = [
+    service.categorise("berry"),
+    service.categorise("berries"),
+    service.categorise("noodle"),
+    service.categorise("noodles"),
+    service.categorise("potato"),
+    service.categorise("potatoes"),
+  ];
+
+  categories.forEach((category) => {
+    expect(category).not.toBe("unknown");
+  });
+});`;
+const logServiceTestCode = `// expediate-api/src/log/log.service.spec.ts
+it("should correctly score my breakfast", () => {
+  const payload = {
+    log: "oats, tahini, peanut butter, 1 banana, 1 portion milk, 15g honey",
+  };
+
+  const { totalScore, logs } = service.create(payload);
+  expect(totalScore).toBe(7);
+  expect(logs["whole-grains"].score).toBe(2);
+  expect(logs["nuts-seeds"].score).toBe(4);
+});`;
+---
+
+<Layout
+  title="Expediate.app — Diet Quality Score (DQS) engine | Adam McKenna | Full Stack Developer"
+  description="Expediate.app case study: deterministic Diet Quality Score engine for messy natural-language athlete food logs."
+>
+  <header
+    class="col-start-5 w-full col-span-4 justify-center grid gap-2 md:gap-4"
+  >
+    <a
+      class="mb-4 md:mb-0 text-xs md:text-base flex items-center gap-2 no-underline"
+      href="/"
+    >
+      <img class="w-4 md:w-7" src="./icons/arrow.svg" />
+      Back to home
+    </a>
+    <h2 class="text-base md:text-lg text-primary-dark -mb-1">case study</h2>
+    <h1 class="text-4xl font-semibold lg:text-5xl">
+      Expediate: food logging for athletes
+    </h1>
+
+    <div class="flex flex-wrap gap-3 opacity-75">
+      <div class="flex flex-wrap gap-1.5">
+        <div
+          class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          UX/UI
+        </div>
+        <div
+          class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Frontend
+        </div>
+        <div
+          class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Backend
+        </div>
+        <div
+          class="rounded bg-support text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          DevOps
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-1.5">
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          TypeScript
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Nest.js
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Next.js
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Jest
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          AWS
+        </div>
+        <div
+          class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
+        >
+          Figma
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm/6 sm:text-base/7">
+      <span class="font-semibold"
+        ><a href="https://expediate.app/" target="_blank">Expediate</a></span
+      > aims to make food logging easier for athletes following the Diet Quality
+      Score model.
+    </p>
+  </header>
+  <img
+    class="col-span-8 col-start-3 my-6"
+    src="./expediate-cover.png"
+    alt="Expediate DQS results cover image"
+  />
+  <section class="grid gap-2 col-span-6 col-start-4 min-w-0">
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Expediate aims to make logging food simple</strong>. Athletes
+      provide a comma-separated list of the food they ate, and the system parses
+      it and provides a <strong
+        ><a href="https://tr3.run/articles/diet-quality-score-dqs-explained"
+          >Diet Quality Score (DQS)</a
+        ></strong
+      >.
+    </p>
+
+    <p class="text-sm/6 sm:text-base/7">
+      The goal of this project was to deliver a <strong
+        >MVP wherein athletes could log data in a simple way and receive a basic
+        DQS-informed summary</strong
+      >. While features such as user accounts, detailed breakdowns and
+      integration with other scoring systems would be useful, these were
+      out-of-scope for the MVP.
+    </p>
+
+    <p class="text-sm/6 sm:text-base/7">
+      Expediate supports a chaotic and sloppy list of food intake, providing the
+      user with useful scoring data.
+    </p>
+
+    <p class="text-sm/6 sm:text-base/7">
+      The key engineering challenge was making DQS reliable from such messy
+      natural-language logs. Logs include mixed objective/subjective units (<code
+        >tbsp</code
+      >, <code>handful</code>, etc) and descriptive adjectives (<code
+        >large</code
+      >, <code>semi-skimmed</code>, etc).
+    </p>
+
+    <p class="text-sm/6 sm:text-base/7">
+      For example, the system accepts inputs such as:
+    </p>
+
+    <div class="min-w-0">
+      <CodeBlock code={exampleInputCode} lang="txt" />
+    </div>
+
+    <p class="text-sm/6 sm:text-base/7">
+      If parsing is inconsistent or the portion maths is wrong, the computed
+      score is not useful.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      What is DQS?
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Diet Quality Score (DQS)</strong> is a rule-of-thumb system introduced
+      by <a
+        href="https://www.triathlete.com/nutrition/do-you-know-your-diet-quality-score-2/"
+        target="_blank">Matt Fitzgerald</a
+      > to help athletes measure diet quality without tracking every calorie.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Fitzgerald&apos;s DQS is point-based and depends on two factors:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        The <strong>quality</strong> of the food type (e.g. fruits vs sweets).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        The <strong>quantity</strong> pattern (how many servings of that food type
+        appear in the log).
+      </li>
+    </ul>
+
+    <p class="text-sm/6 sm:text-base/7">
+      The scoring table maps each food type/category to points based on its 1st
+      through 6th+ serving in the log (serving count derived from parsed
+      units/portions):
+    </p>
+
+    <div class="border border-secondary rounded bg-white overflow-hidden">
+      <table class="w-full table-fixed border-collapse">
+        <thead>
+          <tr class="bg-secondary">
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+            >
+              Food Type
+            </th>
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+              >1st</th
+            >
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+              >2nd</th
+            >
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+              >3rd</th
+            >
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+              >4th</th
+            >
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+              >5th</th
+            >
+            <th
+              class="p-4 pr-0 text-xs font-semibold text-background sm:text-sm"
+              >6th</th
+            >
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Fruits</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ></tr
+          >
+          <tr class="bg-slate-50 border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Vegetables</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ></tr
+          >
+          <tr class="bg-white border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Lean meats &amp; fish</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ></tr
+          >
+          <tr class="bg-slate-50 border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Nuts &amp; seeds</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ></tr
+          >
+          <tr class="bg-white border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Whole grains</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ></tr
+          >
+          <tr class="bg-slate-50 border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Dairy</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >0</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ></tr
+          >
+          <tr class="bg-white border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Refined grains</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ></tr
+          >
+          <tr class="bg-slate-50 border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Sweets</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ></tr
+          >
+          <tr class="bg-white border-b border-secondary"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Fried foods</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ></tr
+          >
+          <tr class="bg-slate-50"
+            ><td
+              class="p-4 pr-0 text-xs text-secondary font-bold sm:text-sm whitespace-normal break-words"
+              >Fatty proteins</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-1</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ><td
+              class="p-4 pr-0 text-center text-xs sm:text-sm"
+              >-2</td
+            ></tr
+          >
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-sm/6 sm:text-base/7">
+      In this project, that table becomes <a
+        href="https://github.com/adam-mckenna/expediate-api/blob/main/src/scorer/scores.ts"
+        ><code>CategoryScores</code></a
+      >, and the API computes DQS by counting servings per category and mapping
+      count and converting those into points.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      The Challenge
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      Because <strong>DQS is the primary output</strong>, the implementation has
+      to:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Produce an explainable breakdown (per category + per logged item).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Normalise inputs consistently (units, plurals/singulars, variants).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Keep portion maths stable so the same log format yields predictable
+        scoring.
+      </li>
+    </ul>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      MVP Goals
+    </h2>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Accept <strong>simple, messy log input</strong>.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Convert the log into <strong>meaningful data</strong> (i.e. foods, categories,
+        servings).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Produce <strong>meaningful DQS outputs</strong> with unit-tested deterministic
+        logic.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Iterate quickly on the parts that most affect score reliability (e.g.
+        parsing, categorisation and portion maths).
+      </li>
+    </ul>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Design (Figma)
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      Expediate was designed from scratch in Figma.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">I focused on:</p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        A simple user interface with minimal distraction, providing a clean
+        interface to submit food logs.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        A results layout that showcases the <code>DQS</code> initially, then expands
+        into per-category and per-item scoring.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Making parsing outcomes visible enough that users understand what the
+        system interpreted (normalised food, units, quantities).
+      </li>
+    </ul>
+    <img
+      src="./expediate-figma.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Expediate Figma wireframe of input and results"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Figma wireframe of log input and results.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      System Architecture
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      The main architectural goal was separation of concerns and
+      maintainability.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      The data logged by the user on the client flows through several stages on
+      the backend (as outlined below), which are intentionally modular.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      The API is orchestrated in a clear sequence:
+    </p>
+    <ol class="list-decimal ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Transformer</strong>: log text → <code
+          >{`{ food, quantity, unit, unitType }`}</code>
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Categoriser</strong>: categorised food based on DQS categories → <code
+          >FoodCategory</code>
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Scorer</strong>: category logs → <code>totalScore</code> + per-category
+        breakdown
+      </li>
+    </ol>
+    <p class="text-sm/6 sm:text-base/7">
+      The main driver for this is that in the future, it may be desirable to add
+      other scoring methods (e.g. <a
+        href="https://en.wikipedia.org/wiki/Nutri-Score">Nutri-Score</a
+      > or <a href="https://en.wikipedia.org/wiki/Nova_classification">NOVA</a
+      >).
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Such scoring systems would require an alternative implementation of the
+      scorer, whereas the transformer and categoriser may potentially remain the
+      same.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Similarly, with our modular approach, parsing/categorisation improvements
+      don't require changes to the scoring stage.
+    </p>
+
+    <h3
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-lg"
+    >
+      Orchestration boundary
+    </h3>
+    <p class="text-sm/6 sm:text-base/7">
+      Pipeline orchestrator: splits the input, parses each item, categorises it,
+      and delegates scoring.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={orchestrationCode} lang="ts" />
+    </div>
+
+    <h3
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-lg"
+    >
+      Interfaces for evolution
+    </h3>
+    <p class="text-sm/6 sm:text-base/7">
+      Categoriser plugin boundary: map a normalised food string to a <code
+        >FoodCategory</code
+      >.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={categoriserInterfaceCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Scoring plugin boundary: compute total DQS and per-category breakdown from
+      scored log items.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={scorerInterfaceCode} lang="ts" />
+    </div>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Key Engineering Decisions
+    </h2>
+    <h3
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-lg"
+    >
+      A) Portion accuracy: base conversions and overrides to make scoring
+      consistent
+    </h3>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Problem:</strong> the portion maths had to be stable across objective
+      units (<code>g</code>, <code>ml</code>, etc.) and subjective units (<code
+        >portion</code
+      >, <code>piece</code>, <code>scoop</code>, etc.).
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Approach:</strong> layered mappings:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        <code>UnitMap</code> converts objective units to grams.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <code>CategoryToGramsMap</code> defines “grams per serving” per <code
+          >FoodCategory</code
+        >.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <code>FoodToGramsMap</code> overrides grams-per-portion for specific foods
+        that don&apos;t fit the generic serving assumption.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <code>SubjectiveUnitToGramsCategoryMap</code> defines grams-per-subjective-unit
+        per category.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        A deterministic serving calculation always rounds up (simple +
+        predictable behavior)
+      </li>
+    </ul>
+    <p class="text-sm/6 sm:text-base/7">
+      Base serving model: convert objective units to grams and define
+      grams-per-category serving.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={unitsMapCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Food-specific overrides for known mismatches (e.g., foods that don&apos;t
+      behave like generic serving sizes).
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={foodToGramsCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Servings calculation: map a logged quantity to grams and round up to the
+      next serving.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={servingsCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Screenshot suggestion: show raw input like <code>4 biscuits</code> and the
+      derived “servings” calculation.
+    </p>
+    <img
+      src="./expediate-servings-example.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Servings calculation example screenshot"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Portion-to-servings calculation example.
+    </p>
+
+    <h3
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-lg"
+    >
+      B) Pluralisation and singular normalisation
+    </h3>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Problem:</strong> atypical plural variants (“berries”, pastries, “potatoes”)
+      could fail matching and lead to <code>unknown</code> categories.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Approach:</strong> normalise foods to singular using:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        An irregular exception map (<code>berry → berries</code>, <code
+          >potato → potatoes</code
+        >, etc.).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Fallback rule: strip trailing <code>s</code>.
+      </li>
+    </ul>
+    <p class="text-sm/6 sm:text-base/7">
+      Singular normalisation: irregular plural overrides + trailing <code
+        >s</code
+      > fallback.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={singulariseCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      The categoriser applies <code>singularise()</code> before matching against
+      <code>FoodCategoryMap</code>:
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Categoriser loop: singularise input then find a matching entry in <code
+        >FoodCategoryMap</code
+      >.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={categoriserLoopCode} lang="ts" />
+    </div>
+
+    <h3
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-lg"
+    >
+      C) Handling adjectives gracefully
+    </h3>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Problem:</strong> adjective handling (&quot;wholemeal&quot;, &quot;wild&quot;,
+      &quot;refined/regular&quot;, etc.) had to be correct without turning the categoriser
+      into fragile conditionals.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Because some categories have the same food, the adjective is critical as
+      it determines whether the food gives a positive or negative score. For
+      example: <code>white rice</code> is a refined grain, where as <code
+        >brown rice</code
+      > is a whole grain.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      <strong>Approach:</strong> build token lists and generate combinations:
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Domain vocabulary: supported grains and adjective tokens used to generate
+      category match phrases.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={adjectivesCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Then category lists include dynamically generated combinations:
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Category token expansion: generate all &quot;adjective/grain&quot;
+      variants for <code>whole-grains</code> and <code>refined-grains</code>.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={grainExpansionCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      The same approach has been used for other categories, such as fried foods
+      and proteins.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Screenshot suggestion: show <code>wholemeal fusilli</code> → <code
+        >whole-grains</code
+      > and <code>white rice</code> → <code>refined-grains</code>.
+    </p>
+    <img
+      src="./expediate-fusilli-grains.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Wholemeal fusilli and refined grains categorisation screenshot"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Adjective-sensitive grain categorisation example.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Transforming the data consistently
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      To keep the scoring reliable, the transformer normalises input:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Strips filler words and characters: <code>of</code>, <code>a</code>, <code
+          >an</code
+        >, <code>the</code>, <code>-</code>.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Parses objective units from patterns like <code>100g</code>.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Parses subjective units (e.g., <code>portion</code>, <code>piece</code
+        >).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Lowercases and normalises food text by removing non-alphanumeric
+        characters.
+      </li>
+    </ul>
+    <p class="text-sm/6 sm:text-base/7">
+      <code>TransformerService.parse()</code>: remove filler words, extract
+      quantity/unit, then normalise the remaining food string.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={transformerCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Screenshot suggestion: show raw log → parsed <code
+        >{`{ food, quantity, unit, unitType }`}</code
+      >.
+    </p>
+    <img
+      src="./expediate-raw-log-parsed.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Raw log request and parsed response screenshot"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Raw input log and parsed output example.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Scoring accurately
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      Scoring uses a category-specific matrix (<code>CategoryScores</code>) and
+      accumulates score per item based on how many servings have already been
+      recorded for that category.
+    </p>
+    <p class="text-sm/6 sm:text-base/7">
+      Point matrix (<code>CategoryScores</code>): points by serving count per
+      category.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={scoresCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Score accumulation (serving-by-serving): index into the matrix using a
+      capped serving count.
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={scoreAccumulationCode} lang="ts" />
+    </div>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Testing strategy
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      Unit tests cover the transformer (filler words, objective vs subjective
+      units), categoriser (whole vs refined grains, plural/singular), and scorer
+      (matrix + serving rounding).
+    </p>
+    <p class="text-sm/6 sm:text-base/7">Examples:</p>
+    <p class="text-sm/6 sm:text-base/7">Transformer tests:</p>
+    <div class="min-w-0">
+      <CodeBlock code={transformerTestCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Categoriser tests (plural/singular and grain adjectives):
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={categoriserTestCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      End-to-end(-ish) scoring through <code>LogService</code>:
+    </p>
+    <div class="min-w-0">
+      <CodeBlock code={logServiceTestCode} lang="ts" />
+    </div>
+    <p class="text-sm/6 sm:text-base/7">
+      Screenshot suggestion: Jest output/coverage.
+    </p>
+    <img
+      src="./expediate-unit-tests.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Jest test output screenshot"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Jest test output and suite pass summary.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      UI build
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      The web app is a thin <a href="https://nextjs.org/">Next.js</a> on top of the
+      API:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Users paste a comma-separated food log into a single text field.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        The app sends the raw log string to the API and receives <code
+          >totalScore</code
+        > plus a per-category breakdown (<code>logs</code> keyed by category slug).
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        The UI presents the DQS and groups logs by category so users can see
+        which categories contributed to the DQS.
+      </li>
+    </ul>
+    <img
+      src="./expediate-ui-log-input.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Expediate log input UI screenshot"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      UI: food log input screen.
+    </p>
+    <img
+      src="./expediate-ui-results.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Expediate DQS results UI screenshot"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      UI: DQS result with per-category breakdown.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Project management
+    </h2>
+    <p class="text-sm/6 sm:text-base/7">
+      I used <code>Todoist</code> to manage the iteration loop:
+    </p>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        MVP first: validate the end-to-end “text input → parsed items → DQS
+        output” path.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Turn each observed failure mode (portion conversions, plural/singular
+        matching, grain adjective handling) into a focused task and make it
+        testable.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        Keep pipeline changes small so each iteration could be validated
+        quickly.
+      </li>
+    </ul>
+    <img
+      src="./expediate-todoist-board.png"
+      class="mt-2 rounded shadow-sm"
+      alt="Todoist board showing MVP and iteration tasks"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="text-philippine-grey text-xs font-light mt-[1px]">
+      Todoist board from MVP to parsing and categorisation iterations.
+    </p>
+
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Outcome
+    </h2>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Delivered a proof-of-concept end-to-end pipeline</strong>: users
+        paste a natural-language log and get a deterministic DQS with an
+        item-level breakdown.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong
+          >Separated transformer, categoriser, and scoring responsibilities</strong
+        > (via interfaces), so future scoring approaches can be added without rewriting
+        normalisation and categorisation.
+      </li>
+    </ul>
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Future considerations
+    </h2>
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        Implement <strong>user accounts</strong> in order to save logs and review
+        DQS over time.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Expanding foodstuff coverage</strong> and improving matching accuracy
+        with more real athlete logs.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Integrate with other scoring systems</strong>, such as NOVA.
+      </li>
+    </ul>
+  </section>
+</Layout>
