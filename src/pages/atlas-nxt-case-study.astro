@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 ---
 
 <Layout
@@ -19,6 +20,17 @@ import Layout from "../layouts/Layout.astro";
     <h2 class="text-base md:text-lg text-primary-dark -mb-1">case study</h2>
 
     <h1 class="text-4xl font-semibold lg:text-5xl">AtlasNXT</h1>
+
+    <ExternalLinksPills
+      links={[
+        {
+          href: "https://www.atlasnxt.com/",
+          label: "Brochure Site",
+          ariaLabel: "AtlasNXT live site",
+          iconSrc: "./icons/attachment.svg",
+        },
+      ]}
+    />
 
     <div class="flex flex-wrap gap-3 opacity-75">
       <div class="flex flex-wrap gap-1.5">

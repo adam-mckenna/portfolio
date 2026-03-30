@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CodeBlock from "../components/CodeBlock.astro";
+import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 
 const exampleInputCode = `1 portion oats, 250ml semi-skimmed milk, large banana, handful raisins, 1 tbsp peanut butter, bunch of crisps ...`;
 const orchestrationCode = `// expediate-api/src/log/log.service.ts
@@ -270,8 +271,8 @@ it("should correctly score my breakfast", () => {
 ---
 
 <Layout
-  title="Expediate.app — Diet Quality Score (DQS) engine | Adam McKenna | Full Stack Developer"
-  description="Expediate.app case study: deterministic Diet Quality Score engine for messy natural-language athlete food logs."
+  title="Expediate Case Study: food logging for athletes | Adam McKenna | Full Stack Developer"
+  description="Expediate case study: deterministic Diet Quality Score engine for messy natural-language food logs."
 >
   <header
     class="col-start-5 w-full col-span-4 justify-center grid gap-2 md:gap-4"
@@ -287,6 +288,29 @@ it("should correctly score my breakfast", () => {
     <h1 class="text-4xl font-semibold lg:text-5xl">
       Expediate: food logging for athletes
     </h1>
+
+    <ExternalLinksPills
+      links={[
+        {
+          href: "https://expediate.app",
+          label: "Live App",
+          ariaLabel: "Expediate live website",
+          iconSrc: "./icons/attachment.svg",
+        },
+        {
+          href: "https://github.com/adam-mckenna/expediate-web",
+          label: "GitHub (UI)",
+          ariaLabel: "Expediate GitHub UI repository",
+          iconSrc: "./icons/github-grey.svg",
+        },
+        {
+          href: "https://github.com/adam-mckenna/expediate-api",
+          label: "GitHub (API)",
+          ariaLabel: "Expediate GitHub API repository",
+          iconSrc: "./icons/github-grey.svg",
+        },
+      ]}
+    />
 
     <div class="flex flex-wrap gap-3 opacity-75">
       <div class="flex flex-wrap gap-1.5">
@@ -348,16 +372,24 @@ it("should correctly score my breakfast", () => {
     <p class="text-sm/6 sm:text-base/7">
       <span class="font-semibold"
         ><a href="https://expediate.app/" target="_blank">Expediate</a></span
-      > aims to make food logging easier for athletes following the Diet Quality
-      Score model.
+      > aims to make food logging easier for athletes following the <strong>Diet Quality
+      Score</strong> model.
     </p>
   </header>
+
   <img
     class="col-span-8 col-start-3 my-6"
     src="./expediate-cover.png"
     alt="Expediate DQS results cover image"
   />
+
   <section class="grid gap-2 col-span-6 col-start-4 min-w-0">
+    <h2
+      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
+    >
+      Overview &amp; Problem
+    </h2>
+
     <p class="text-sm/6 sm:text-base/7">
       <strong>Expediate aims to make logging food simple</strong>. Athletes
       provide a comma-separated list of the food they ate, and the system parses

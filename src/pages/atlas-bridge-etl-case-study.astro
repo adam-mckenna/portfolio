@@ -116,9 +116,10 @@ const cronJob = {
     </div>
 
     <p class="text-sm/6 sm:text-base/7">
-      Built a bi-directional ETL bridge that keeps the legacy Atlas Phoenix
-      monolith and the modern Atlas micro-services platform consistent during a
-      long deprecation period.
+      Built a <strong>bi-directional ETL bridge</strong> that keeps a
+      <strong>legacy Phoenix monolith</strong> and a modern full-stack
+      JavaScript micro-services platform <strong>consistent</strong>
+      during a long deprecation period.
     </p>
   </header>
 
@@ -140,20 +141,21 @@ const cronJob = {
       <a href="https://atlasnxt.com/" target="_blank" rel="noopener noreferrer"
         >Atlas</a
       >
-      ecosystem consists of a legacy
-      <a
-        href="https://www.phoenixframework.org/"
-        target="_blank"
-        rel="noopener noreferrer">Phoenix monolith</a
-      >
+      ecosystem consists of a <strong>legacy
+        <a
+          href="https://www.phoenixframework.org/"
+          target="_blank"
+          rel="noopener noreferrer">Phoenix monolith</a
+        ></strong>
       and the new full-stack JavaScript Atlas Platform built as micro-services.
     </p>
 
     <p class="text-sm/6 sm:text-base/7">
-      Both systems are temporarily running in parallel in production until we
-      deprecate the legacy monolith. Without a sync mechanism, data between the
-      systems would quickly become inconsistent, leading to operational issues
-      and increased maintenance overhead.
+      Both systems are <strong>temporarily running in parallel</strong> in
+      production until we deprecate the legacy monolith. Without a sync
+      mechanism, data between the systems would quickly become
+      <strong>inconsistent</strong>, leading to operational issues and
+      increased maintenance overhead.
     </p>
 
     <h2
@@ -166,21 +168,22 @@ const cronJob = {
       I built Atlas Bridge, an ETL system in Node.js, using
       <a href="https://koajs.com/" target="_blank" rel="noopener noreferrer"
         >Koa</a
-      >, that keeps both systems in sync automatically. It handles
-      bi-directional data flow, ensures transactional integrity, and leverages
+      >, that <strong>keeps both systems in sync automatically</strong>. It
+      handles <strong>bi-directional data flow</strong>, ensures
+      <strong>transactional integrity</strong>, and leverages
       <a
         href="https://www.datadoghq.com/"
         target="_blank"
         rel="noopener noreferrer">Datadog</a
       >
-      observability for production reliability.
+      observability for <strong>production reliability</strong>.
     </p>
 
     <p class="text-sm/6 sm:text-base/7">
-      Atlas Bridge runs on a scheduled CronJob that checks for data changes
-      every minute using the
-      <code class="font-mono">updated_at</code>
-      field in both databases to determine the most recent change.
+      Atlas Bridge runs on a <strong>scheduled CronJob</strong> that checks for
+      <strong>data changes every minute</strong> using the
+      <strong><code class="font-mono">updated_at</code></strong> field in both
+      databases to determine the most recent change.
     </p>
 
     <h2
@@ -188,6 +191,21 @@ const cronJob = {
     >
       System Architecture
     </h2>
+
+    <ul class="list-disc ml-4">
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Atlas Bridge</strong> sits at the centre, handling ETL, data
+        transformation, and conflict resolution.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Cronjobs</strong> trigger scheduled syncs, ensuring up-to-date
+        consistency.
+      </li>
+      <li class="text-sm/6 sm:text-base/7">
+        <strong>Datadog observability</strong> provides metrics, alerting, and
+        dashboards for system health and reliability.
+      </li>
+    </ul>
 
     <img
       class="w-full rounded shadow-sm"
@@ -197,26 +215,7 @@ const cronJob = {
       decoding="async"
     />
 
-    <h2
-      class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
-    >
-      Highlights
-    </h2>
-
-    <ul class="list-disc ml-4">
-      <li class="text-sm/6 sm:text-base/7">
-        Atlas Bridge sits at the centre, handling ETL, data transformation, and
-        conflict resolution.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Cronjobs trigger scheduled syncs, ensuring up-to-date consistency.
-      </li>
-      <li class="text-sm/6 sm:text-base/7">
-        Datadog observability provides metrics, alerting, and dashboards for
-        system health and reliability.
-      </li>
-    </ul>
-
+  
     <h2
       class="font-semibold mt-3 flex flex-wrap sm:text-xl sm:mt-4 lg:text-1xl"
     >

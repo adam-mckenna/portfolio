@@ -1,6 +1,7 @@
 ---
 import Nav from "../components/Nav";
 import Layout from "../layouts/Layout.astro";
+import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 ---
 
 <Layout
@@ -621,6 +622,30 @@ import Layout from "../layouts/Layout.astro";
             >
           </h3>
 
+          <ExternalLinksPills
+            className="mt-1"  
+            links={[
+              {
+                href: "https://expediate.app",
+                label: "Live App",
+                ariaLabel: "Expediate live website",
+                iconSrc: "./icons/attachment.svg",
+              },
+              {
+                href: "https://github.com/adam-mckenna/expediate-web",
+                label: "GitHub (UI)",
+                ariaLabel: "Expediate GitHub UI repository",
+                iconSrc: "./icons/github-grey.svg",
+              },
+              {
+                href: "https://github.com/adam-mckenna/expediate-api",
+                label: "GitHub (API)",
+                ariaLabel: "Expediate GitHub API repository",
+                iconSrc: "./icons/github-grey.svg",
+              },
+            ]}
+          />
+
           <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
             <div
               class="rounded bg-secondary text-background font-normal py-1 px-2 text-xs transition-all"
@@ -787,19 +812,17 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
 
-          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
-            <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
-              <a
-                class="cursor-pointer flex no-underline justify-center text-primary-dark"
-                target="_blank"
-                href="https://tr3.run"
-                aria-label="tr3 running live website"
-              >
-                <img class="w-3 mr-1" src="./icons/attachment.svg" alt="" /> Live
-                Website</a
-              >
-            </div>
-          </div>
+          <ExternalLinksPills
+            className="mt-1"
+            links={[
+              {
+                href: "https://tr3.run",
+                label: "Live Website",
+                ariaLabel: "tr3 running live website",
+                iconSrc: "./icons/attachment.svg",
+              },
+            ]}
+          />
 
           <p class="text-sm/6 sm:text-base/7 mt-0.5">
             <span class="font-semibold"
@@ -869,19 +892,17 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
 
-          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
-            <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
-              <a
-                class="flex no-underline justify-center text-primary-dark"
-                target="_blank"
-                href="https://www.atlasnxt.com/"
-                aria-label="AtlasNXT live site"
-              >
-                <img class="w-3 mr-1" src="./icons/attachment.svg" alt="" /> Brochure
-                Site</a
-              >
-            </div>
-          </div>
+          <ExternalLinksPills
+            className="mt-1"
+            links={[
+              {
+                href: "https://www.atlasnxt.com/",
+                label: "Brochure Site",
+                ariaLabel: "AtlasNXT live site",
+                iconSrc: "./icons/attachment.svg",
+              },
+            ]}
+          />
 
           <p class="text-sm/6 sm:text-base/7 mt-1">
             <strong>AtlasNXT</strong> is a SaaS duty-of-care platform used by organisations
@@ -952,30 +973,23 @@ import Layout from "../layouts/Layout.astro";
               PWA
             </div>
           </div>
-          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
-            <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
-              <a
-                class="flex no-underline justify-center text-primary-dark"
-                target="_blank"
-                href="https://www.youtube.com/watch?v=6HBMzX20HFk"
-                aria-label="YouTube demo of OI View"
-              >
-                <img class="w-3 mr-1" src="./icons/attachment.svg" alt="" /> Demo
-                (YouTube)</a
-              >
-            </div>
-            <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
-              <a
-                class="flex no-underline justify-center text-primary-dark"
-                target="_blank"
-                href="https://www.youtube.com/watch?v=rsBZ-XYPiC8"
-                aria-label="YouTube advertisement of OI View"
-              >
-                <img class="w-3 mr-1" src="./icons/attachment.svg" alt="" /> Advertisement
-                (YouTube)</a
-              >
-            </div>
-          </div>
+          <ExternalLinksPills
+            className="mt-1"
+            links={[
+              {
+                href: "https://www.youtube.com/watch?v=6HBMzX20HFk",
+                label: "Demo (YouTube)",
+                ariaLabel: "YouTube demo of OI View",
+                iconSrc: "./icons/attachment.svg",
+              },
+              {
+                href: "https://www.youtube.com/watch?v=rsBZ-XYPiC8",
+                label: "Advertisement (YouTube)",
+                ariaLabel: "YouTube advertisement of OI View",
+                iconSrc: "./icons/attachment.svg",
+              },
+            ]}
+          />
 
           <p class="text-sm/6 sm:text-base/7 mt-1">
             <strong>Oi View is a data visualisation platform</strong> to enable insights
@@ -1029,19 +1043,17 @@ import Layout from "../layouts/Layout.astro";
               Material UI
             </div>
           </div>
-          <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
-            <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
-              <a
-                class="flex no-underline justify-center text-primary-dark"
-                target="_blank"
-                href="https://www.youtube.com/watch?v=jI3uzHRx7c0"
-                aria-label="YouTube demo of Analytics Unlocked"
-              >
-                <img class="w-3 mr-1" src="./icons/attachment.svg" alt="" /> Demo
-                (YouTube)</a
-              >
-            </div>
-          </div>
+          <ExternalLinksPills
+            className="mt-1"
+            links={[
+              {
+                href: "https://www.youtube.com/watch?v=jI3uzHRx7c0",
+                label: "Demo (YouTube)",
+                ariaLabel: "YouTube demo of Analytics Unlocked",
+                iconSrc: "./icons/attachment.svg",
+              },
+            ]}
+          />
           <p class="text-sm/6 sm:text-base/7 mt-1">
             <strong
               >Analytics Unlocked is an award-winning data visualisation</strong

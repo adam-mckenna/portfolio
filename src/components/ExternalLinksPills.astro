@@ -1,0 +1,34 @@
+---
+export interface ExternalLinkPill {
+  href: string;
+  label: string;
+  ariaLabel: string;
+  iconSrc: string;
+}
+
+interface Props {
+  links: ExternalLinkPill[];
+  className?: string;
+}
+
+const { links, className } = Astro.props as Props;
+---
+
+{links?.length ? (
+  <div class={`flex flex-wrap gap-2.5 opacity-75 ${className}`}>
+    {links.map((link) => (
+      <div class="rounded py-0.5 text-xs sm:text-sm transition-all">
+        <a
+          class="cursor-pointer flex no-underline justify-center text-primary-dark"
+          href={link.href}
+          target="_blank"
+          aria-label={link.ariaLabel}
+        >
+          <img class="w-3 mr-1" src={link.iconSrc} alt="" />
+          {link.label}
+        </a>
+      </div>
+    ))}
+  </div>
+) : null}
+
