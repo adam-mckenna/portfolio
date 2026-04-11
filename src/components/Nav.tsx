@@ -7,7 +7,7 @@ const Links: { [key: string]: string } = {
   top: "About",
   experience: "Experience",
   portfolio: "Portfolio",
-  "career-breaks": "Career Breaks",
+  // "career-breaks": "Career Breaks",
 };
 
 const ObserverOptions = {
@@ -48,18 +48,18 @@ const Nav = () => {
       document.getElementById("about"),
       document.getElementById("experience"),
       document.getElementById("portfolio"),
-      document.getElementById("career-breaks"),
-    ];
+      // document.getElementById("career-breaks"),
+    ].filter(Boolean) as HTMLElement[];
 
     const observer = new IntersectionObserver(
       ObserverCallback,
       ObserverOptions,
     );
 
-    navLinks.forEach((element) => observer.observe(element as HTMLElement));
+    navLinks.forEach((element) => observer.observe(element));
 
     return () =>
-      navLinks.forEach((element) => observer.unobserve(element as HTMLElement));
+      navLinks.forEach((element) => observer.unobserve(element));
   }, []);
 
   useEffect(() => {
