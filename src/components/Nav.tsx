@@ -58,8 +58,7 @@ const Nav = () => {
 
     navLinks.forEach((element) => observer.observe(element));
 
-    return () =>
-      navLinks.forEach((element) => observer.unobserve(element));
+    return () => navLinks.forEach((element) => observer.unobserve(element));
   }, []);
 
   useEffect(() => {
