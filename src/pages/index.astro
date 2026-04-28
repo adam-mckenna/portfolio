@@ -96,8 +96,8 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
           >small British agency</a
         >, the <a href="https://dwpdigital.blog.gov.uk/" target="_blank"
           >UK government</a
-        >, a <a href="https://atlasnxt.com/" target="_blank"
-          >world-leading duty-of-care platform</a
+        >, a <span
+          class="font-semibold">world-leading duty-of-care platform</span
         > and a <a href="https://moneyadvicetrust.org/" target="_blank"
           >debt-support charity</a
         >.
@@ -220,9 +220,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
             >
             <a
               class="flex items-center gap-1 text-black no-underline"
-              href="https://www.track24.com/"
+              href="#"
               target="_blank"
-              >Track24 <img
+              >Confidential Employer <img
                 class="inline-block w-2 lg:w-3"
                 src="./icons/external-link.svg"
                 alt="(external)"
@@ -230,9 +230,7 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
             >
           </h3>
           <p class="text-sm/6 sm:text-base/7">
-            Development of <a href="https://atlasnxt.com/about-us/">AtlasNXT</a
-            >, a duty-of-care platform used by organisations including the BBC,
-            UN and FCDO.
+            Development of a duty-of-care platform used by major international organisations.
           </p>
 
           <div class="flex flex-wrap mt-1 gap-1.5 opacity-75">
@@ -771,8 +769,8 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
           <h3 class="font-semibold flex flex-wrap sm:text-xl lg:text-1xl">
             <a
               class="cursor-pointer flex items-center gap-1 text-black no-underline"
-              href="/atlas-bridge-etl-case-study"
-              target="_blank">Atlas Bridge: ETL sync</a
+              href="/sync-bridge-etl-case-study"
+              target="_blank">Sync Bridge: ETL sync</a
             >
           </h3>
 
@@ -805,15 +803,14 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
           </div>
 
           <p class="text-sm/6 sm:text-base/7 mt-1">
-            An <strong>ETL bridge</strong> that keeps a legacy <strong
-              >Phoenix monolith</strong
-            > and a modern <strong> micro-services platform </strong> consistent
-            via bi-directional sync, transactional safety, and timestamp-based conflict
-            resolution.
+            An <strong>ETL bridge</strong> that keeps a legacy
+            <strong>monolith</strong> and a modern
+            <strong> micro-services platform </strong> consistent via bi-directional
+            sync, transactional safety, and timestamp-based conflict resolution.
           </p>
 
           <a
-            href="/atlas-bridge-etl-case-study"
+            href="/sync-bridge-etl-case-study"
             class="rounded bg-secondary text-background font-medium text-sm opacity-90 text-center py-2 mt-2 group transition-all hover:opacity-100 hover:text-background hover:animate-pulse no-underline"
           >
             Case study
@@ -827,9 +824,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 
         <div class="mt-4 sm:mt-1 sm:col-span-4 sm:order-first">
           <img
-            alt="Atlas Bridge cover"
+            alt="Sync Bridge cover"
             class="rounded shadow-sm"
-            src="./atlas-bridge-cover.png"
+            src="./sync-bridge-cover.png"
           />
         </div>
       </article>
@@ -923,8 +920,8 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
           <h3 class="font-semibold flex flex-wrap sm:text-xl lg:text-1xl">
             <a
               class="flex items-center gap-1 text-black no-underline"
-              href="/atlas-nxt-case-study"
-              target="_blank">AtlasNXT</a
+              href="/duty-of-care-platform-case-study"
+              target="_blank">Duty-of-Care Platform</a
             >
           </h3>
 
@@ -956,26 +953,12 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
             </div>
           </div>
 
-          <ExternalLinksPills
-            className="mt-1"
-            links={[
-              {
-                href: "https://www.atlasnxt.com/",
-                label: "Brochure Site",
-                ariaLabel: "AtlasNXT live site",
-                iconSrc: "./icons/attachment.svg",
-              },
-            ]}
-          />
-
           <p class="text-sm/6 sm:text-base/7 mt-1">
-            <strong>AtlasNXT</strong> is a SaaS duty-of-care platform used by organisations
-            including the <strong>BBC</strong>, <strong>UN</strong> and
-            <strong>FCDO</strong>. It helps teams monitor and protect staff in
+            <strong>This SaaS duty-of-care platform</strong> helps teams monitor and protect staff in
             <strong>high-risk environments</strong>, such as conflict zones or
             politically unstable regions.
           </p><a
-            href="/atlas-nxt-case-study"
+            href="/duty-of-care-platform-case-study"
             class="rounded bg-secondary text-background font-medium text-sm opacity-90 text-center py-2 mt-2 group transition-all hover:opacity-100 hover:text-background hover:animate-pulse no-underline"
           >
             Case study
@@ -989,9 +972,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 
         <div class="mt-4 sm:mt-1 sm:col-span-4 sm:order-first">
           <img
-            alt="AtlasNXT mockup"
+            alt="Duty-of-care platform mockup"
             class="rounded shadow-sm"
-            src="./atlas-nxt-mockup.png"
+            src="./duty-platform-mockup.png"
           />
         </div>
       </article>

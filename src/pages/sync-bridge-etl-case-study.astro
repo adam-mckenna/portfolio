@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import CodeBlock from "../components/CodeBlock.astro";
 
-const atlasBridgeMigrateDataCode = String.raw`// Paginate tenant Postgres (Knex) with offset/limit. Process each page in parallel,
+const syncBridgeMigrateDataCode = String.raw`// Paginate tenant Postgres (Knex) with offset/limit. Process each page in parallel,
 // recurse until a short page. Stages ordered: users/staff → teams/categories → geofences/members → reconcile deletes.
 // e.g. Promise.all([ batchProcess(users...), batchProcess(staff...), ... ])
 
@@ -20,7 +20,7 @@ async function batchProcess<R, P>(
   return processed;
 }`;
 
-const atlasBridgeJobsSyncCode = String.raw`// Per-tenant CronJob: labels for org/tenant, schedule from config, tight job history,
+const syncBridgeJobsSyncCode = String.raw`// Per-tenant CronJob: labels for org/tenant, schedule from config, tight job history,
 // single completion. Container runs the compiled sync entrypoint (not the HTTP server).
 const cronJob = {
   kind: 'CronJob',
@@ -51,8 +51,8 @@ const cronJob = {
 ---
 
 <Layout
-  title="Atlas Bridge (ETL) Case Study | Adam McKenna | Full Stack Developer"
-  description="Atlas Bridge is an ETL sync system built with Node.js and Koa, keeping two production data systems consistent."
+  title="Sync Bridge (ETL) Case Study | Adam McKenna | Full Stack Developer"
+  description="Sync Bridge is an ETL sync system built with Node.js and Koa, keeping two production data systems consistent."
 >
   <header
     class="col-start-5 w-full col-span-4 justify-center grid gap-2 md:gap-4"
@@ -66,7 +66,7 @@ const cronJob = {
     </a>
     <h2 class="text-base md:text-lg text-primary-dark -mb-1">case study</h2>
 
-    <h1 class="text-4xl font-semibold lg:text-5xl">Atlas Bridge</h1>
+    <h1 class="text-4xl font-semibold lg:text-5xl">Sync Bridge</h1>
 
     <div class="flex flex-wrap gap-3 opacity-75">
       <div class="flex flex-wrap gap-1.5">
@@ -117,7 +117,7 @@ const cronJob = {
 
     <p class="text-sm/6 sm:text-base/7">
       Built a <strong>bi-directional ETL bridge</strong> that keeps a
-      <strong>legacy Phoenix monolith</strong> and a modern full-stack JavaScript
+      <strong>legacy monolith</strong> and a modern full-stack JavaScript
       micro-services platform <strong>consistent</strong>
       during a long deprecation period.
     </p>
@@ -125,8 +125,8 @@ const cronJob = {
 
   <img
     class="col-span-8 col-start-3 my-6 rounded shadow-sm"
-    src="./atlas-bridge-cover.png"
-    alt="Atlas Bridge cover"
+    src="./sync-bridge-cover.png"
+    alt="Sync Bridge cover"
   />
 
   <section class="grid gap-2 col-span-6 col-start-4">
@@ -137,19 +137,9 @@ const cronJob = {
     </h2>
 
     <p class="text-sm/6 sm:text-base/7">
-      The
-      <a href="https://atlasnxt.com/" target="_blank" rel="noopener noreferrer"
-        >Atlas</a
-      >
-      ecosystem consists of a <strong
-        >legacy
-        <a
-          href="https://www.phoenixframework.org/"
-          target="_blank"
-          rel="noopener noreferrer">Phoenix monolith</a
-        ></strong
-      >
-      and the new full-stack JavaScript Atlas Platform built as micro-services.
+      The platform ecosystem consists of a
+      <strong>legacy monolith</strong> and a new full-stack JavaScript platform
+      built as micro-services.
     </p>
 
     <p class="text-sm/6 sm:text-base/7">
@@ -167,7 +157,7 @@ const cronJob = {
     </h2>
 
     <p class="text-sm/6 sm:text-base/7">
-      I built Atlas Bridge, an ETL system in Node.js, using
+      I built Sync Bridge, an ETL system in Node.js, using
       <a href="https://koajs.com/" target="_blank" rel="noopener noreferrer"
         >Koa</a
       >, that <strong>keeps both systems in sync automatically</strong>. It
@@ -182,7 +172,7 @@ const cronJob = {
     </p>
 
     <p class="text-sm/6 sm:text-base/7">
-      Atlas Bridge runs on a <strong>scheduled CronJob</strong> that checks for
+      Sync Bridge runs on a <strong>scheduled CronJob</strong> that checks for
       <strong>data changes every minute</strong> using the
       <strong><code class="font-mono">updated_at</code></strong> field in both databases
       to determine the most recent change.
@@ -196,7 +186,7 @@ const cronJob = {
 
     <ul class="list-disc ml-4">
       <li class="text-sm/6 sm:text-base/7">
-        <strong>Atlas Bridge</strong> sits at the centre, handling ETL, data transformation,
+        <strong>Sync Bridge</strong> sits at the centre, handling ETL, data transformation,
         and conflict resolution.
       </li>
       <li class="text-sm/6 sm:text-base/7">
@@ -210,8 +200,8 @@ const cronJob = {
 
     <img
       class="w-full rounded shadow-sm"
-      src="./atlas-bridge-diagram.png"
-      alt="Atlas Bridge (ETL + Koa) system architecture diagram"
+      src="./sync-bridge-diagram.png"
+      alt="Sync Bridge (ETL + Koa) system architecture diagram"
       loading="lazy"
       decoding="async"
     />
@@ -229,7 +219,7 @@ const cronJob = {
       </li>
       <li class="text-sm/6 sm:text-base/7">
         <strong>Schema differences:</strong> transformation layer reconciles legacy
-        Atlas fields with new micro-service schemas.
+        legacy monolith fields with new micro-service schemas.
       </li>
       <li class="text-sm/6 sm:text-base/7">
         <strong>Transactional safety:</strong> database transactions ensure atomic
@@ -249,7 +239,7 @@ const cronJob = {
 
     <div class="grid gap-6 min-w-0">
       <div class="min-w-0">
-        <CodeBlock code={atlasBridgeMigrateDataCode} lang="ts" />
+        <CodeBlock code={syncBridgeMigrateDataCode} lang="ts" />
         <p class="text-philippine-grey text-xs font-light mt-2">
           Batched, ordered ETL from tenant DB into platform services with
           explicit reconciliation passes.
@@ -257,7 +247,7 @@ const cronJob = {
       </div>
 
       <div class="min-w-0">
-        <CodeBlock code={atlasBridgeJobsSyncCode} lang="ts" />
+        <CodeBlock code={syncBridgeJobsSyncCode} lang="ts" />
         <p class="text-philippine-grey text-xs font-light mt-2">
           Kubernetes CronJobs created/updated from Node; sync workload runs
           under dd-trace.
