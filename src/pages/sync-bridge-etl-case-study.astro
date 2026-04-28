@@ -2,52 +2,69 @@
 import Layout from "../layouts/Layout.astro";
 import CodeBlock from "../components/CodeBlock.astro";
 
-const syncBridgeMigrateDataCode = String.raw`// Paginate tenant Postgres (Knex) with offset/limit. Process each page in parallel,
-// recurse until a short page. Stages ordered: users/staff → teams/categories → geofences/members → reconcile deletes.
-// e.g. Promise.all([ batchProcess(users...), batchProcess(staff...), ... ])
+const syncBridgeMigrateDataCode = String.raw`// Cursor-based paginator for customer data. Each page is transformed concurrently.
+// Flow is intentionally staged: identities -> groupings -> geo entities -> reconciliation.
+// e.g. for (const stage of stages) await runStage(stage)
 
-async function batchProcess<R, P>(
-  retrieve: (offset: number, limit: number) => Promise<R[]>,
-  processor: (row: R) => Promise<P>,
-  offset = 0,
-  limit = 100,
-): Promise<P[]> {
-  const records = await retrieve(offset, limit);
-  const processed = await Promise.all(records.map(processor));
-  if (records.length === limit) {
-    return [...processed, ...(await batchProcess(retrieve, processor, offset + limit, limit))];
+type FetchPage<T> = (cursor: string | null, size: number) => Promise<{
+  rows: T[];
+  nextCursor: string | null;
+}>;
+
+async function drainInPages<T, R>(
+  fetchPage: FetchPage<T>,
+  transform: (row: T) => Promise<R>,
+  pageSize = 100,
+): Promise<R[]> {
+  const output: R[] = [];
+  let cursor: string | null = null;
+
+  while (true) {
+    const { rows, nextCursor } = await fetchPage(cursor, pageSize);
+    output.push(...(await Promise.all(rows.map((row) => transform(row)))));
+
+    if (!nextCursor || rows.length === 0) break;
+    cursor = nextCursor;
   }
-  return processed;
+
+  return output;
 }`;
 
-const syncBridgeJobsSyncCode = String.raw`// Per-tenant CronJob: labels for org/tenant, schedule from config, tight job history,
-// single completion. Container runs the compiled sync entrypoint (not the HTTP server).
-const cronJob = {
-  kind: 'CronJob',
-  metadata: { labels: { /* org id, tenant name, component: sync-job */ } },
-  spec: {
-    schedule: config.cron.schedule,
-    failedJobsHistoryLimit: 0,
-    successfulJobsHistoryLimit: 1,
-    startingDeadlineSeconds: 120,
-    jobTemplate: {
-      spec: {
-        completions: 1,
-        template: {
-          spec: {
-            containers: [{
-              name: 'sync',
-              image: config.job.image,
-              command: ['/nodejs/bin/node', '--require=dd-trace/init', 'src/job.js'],
-              env: [ /* TENANT_*, DATABASE_*, service hostnames, … */ ],
-            }],
-            restartPolicy: 'OnFailure',
+const syncBridgeJobsSyncCode = String.raw`// Build one CronJob manifest per customer from runtime config.
+// History is kept small, runs are single-shot, and the sync entrypoint is executed directly.
+function makeCustomerSyncCronJob(config: CustomerConfig) {
+  return {
+    apiVersion: 'batch/v1',
+    kind: 'CronJob',
+    metadata: {
+      name: \`sync-\${config.customerSlug}\`,
+      labels: { /* business, customer, component: sync */ },
+    },
+    spec: {
+      schedule: config.schedule,
+      concurrencyPolicy: 'Forbid',
+      failedJobsHistoryLimit: 0,
+      successfulJobsHistoryLimit: 1,
+      jobTemplate: {
+        spec: {
+          template: {
+            spec: {
+              restartPolicy: 'OnFailure',
+              containers: [
+                {
+                  name: 'sync-worker',
+                  image: config.image,
+                  args: ['--require=dd-trace/init', 'dist/job.js'],
+                  env: [ /* CUSTOMER_*, DB_*, upstream/downstream hosts */ ],
+                },
+              ],
+            },
           },
         },
       },
     },
-  },
-};`;
+  };
+}`;
 ---
 
 <Layout
@@ -241,7 +258,7 @@ const cronJob = {
       <div class="min-w-0">
         <CodeBlock code={syncBridgeMigrateDataCode} lang="ts" />
         <p class="text-philippine-grey text-xs font-light mt-2">
-          Batched, ordered ETL from tenant DB into platform services with
+          Batched, ordered ETL from customer DB into platform services with
           explicit reconciliation passes.
         </p>
       </div>
