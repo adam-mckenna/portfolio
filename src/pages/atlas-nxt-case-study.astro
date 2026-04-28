@@ -4,8 +4,8 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 ---
 
 <Layout
-  title="Duty-of-Care Platform Case Study | Adam McKenna | Full Stack Developer"
-  description="A duty-of-care platform case study focused on frontend and UX improvements."
+  title="AtlasNXT Case Study | Adam McKenna | Full Stack Developer"
+  description="Atlas NXT is a duty-of-care platform used by organisations including the BBC, UN and FCDO."
 >
   <header
     class="col-start-5 w-full col-span-4 justify-center grid gap-2 md:gap-4"
@@ -19,7 +19,18 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </a>
     <h2 class="text-base md:text-lg text-primary-dark -mb-1">case study</h2>
 
-    <h1 class="text-4xl font-semibold lg:text-5xl">Duty-of-Care Platform</h1>
+    <h1 class="text-4xl font-semibold lg:text-5xl">AtlasNXT</h1>
+
+    <ExternalLinksPills
+      links={[
+        {
+          href: "https://www.atlasnxt.com/",
+          label: "Brochure Site",
+          ariaLabel: "AtlasNXT live site",
+          iconSrc: "./icons/attachment.svg",
+        },
+      ]}
+    />
 
 
     <div class="flex flex-wrap gap-3 opacity-75">
@@ -71,20 +82,21 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 
     <p class="text-sm/6 sm:text-base/7">
       <span class="font-semibold"
-        >A duty-of-care platform used by large international organisations.</span
+        ><a href="https://atlasnxt.com/" target="_blank">AtlasNXT</a> is a duty-of-care
+        platform used by organisations including the BBC, UN and FCDO.</span
       >
     </p>
   </header>
 
   <img
     class="col-span-8 col-start-3 my-6"
-    src="./duty-platform-mockup.png"
-    alt="Duty-of-care platform application mockup"
+    src="./atlas-nxt-mockup.png"
+    alt="AtlasNXT application mockup"
   />
   <section class="grid gap-2 col-span-6 col-start-4">
     <p class="text-sm/6 sm:text-base/7">
       <strong
-        >This SaaS duty-of-care platform was developed for a private client</strong
+        >AtlasNXT is a SaaS duty-of-care platform developed by Track24</strong
       > to help organisations monitor and protect their staff in
       <strong>high-risk environments</strong>, such as conflict zones or
       politically unstable regions. The platform is two-fold:
@@ -100,7 +112,7 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </h2>
 
     <p class="text-sm/6 sm:text-base/7">
-      When I joined the company at the end of 2024, the platform was already
+      When I joined Track24 at the end of 2024, AtlasNXT was already
       <strong>live and functional</strong>. The Elixir Phoenix application had
       been built by a <strong
         >rotating door of contractors working largely in silo</strong
@@ -130,7 +142,7 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </ul>
 
     <p class="text-sm/6 sm:text-base/7">
-      Given the platform’s use in <strong>genuinely high-stakes situations</strong>,
+      Given AtlasNXT’s use in <strong>genuinely high-stakes situations</strong>,
       these issues directly affected <strong
         >usability, trust, and operator efficiency</strong
       >, and made the product <strong>harder to market and sell</strong>.
@@ -153,9 +165,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </p>
 
     <img
-      src="./duty-platform-animation.gif"
+      src="./atlas-nxt-animation.gif"
       class="mt-2"
-      alt="Duty-of-care platform UI animation"
+      alt="AtlasNXT UI animation"
       loading="lazy"
       decoding="async"
     />
@@ -209,9 +221,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </ul>
 
     <img
-      src="./duty-platform-figma.png"
+      src="./atlas-nxt-mockup-figma.png"
       class="mt-2"
-      alt="Duty-of-care platform Figma design system"
+      alt="AtlasNXT Figma design system"
       loading="lazy"
       decoding="async"
     />
@@ -248,9 +260,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </ul>
 
     <img
-      src="./duty-platform-login-before-after.png"
+      src="./atlas-nxt-login-before-after.png"
       class="mt-2"
-      alt="Duty-of-care platform login page before and after redesign"
+      alt="AtlasNXT login page before and after re-design"
       loading="lazy"
       decoding="async"
     />
@@ -266,7 +278,7 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
 
     <p class="text-sm/6 sm:text-base/7">
       While much of the work was subtle, the
-      <strong>cumulative effect was significant</strong>. The platform evolved from
+      <strong>cumulative effect was significant</strong>. AtlasNXT evolved from
       feeling like an internal tool into a
       <strong>polished, production-grade platform</strong> suitable for enterprise
       and government clients.
@@ -285,9 +297,9 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
     </p>
 
     <img
-      src="./duty-platform-animation-heatmap.gif"
+      src="./atlas-nxt-animation-heatmap.gif"
       class="mt-2"
-      alt="Duty-of-care platform UI heatmap animation"
+      alt="AtlasNXT UI heatmap animation"
       loading="lazy"
       decoding="async"
     />
@@ -305,7 +317,7 @@ import ExternalLinksPills from "../components/ExternalLinksPills.astro";
       This project reinforced the value of
       <strong>quality over quantity</strong>. By focusing on consistency,
       usability, and polish — and extrapolating those improvements across the
-      system — the platform became
+      system — AtlasNXT became
       <strong>more trustworthy, calmer, and more delightful</strong> for both existing
       and future customers.
     </p>
